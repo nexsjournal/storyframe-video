@@ -12,11 +12,11 @@
     <a href="https://github.com/nexsjournal/storyframe-video/actions/workflows/check.yml"><img src="https://github.com/nexsjournal/storyframe-video/actions/workflows/check.yml/badge.svg" alt="CI" /></a>
   </p>
   <p>
-    <a href="#快速开始">快速开始</a> ·
-    <a href="#工作流">工作流</a> ·
-    <a href="#六种模式">六种模式</a> ·
     <a href="#风格库">风格库</a> ·
-    <a href="#示例">示例</a> ·
+    <a href="#怎么用两种开始方式">怎么用</a> ·
+    <a href="#快速开始">快速开始</a> ·
+    <a href="#六种模式">六种模式</a> ·
+    <a href="#工作流">工作流</a> ·
     <a href="#faq">FAQ</a>
   </p>
 </div>
@@ -36,17 +36,19 @@
 > 适用于：产品推广、功能发布、知识讲解、口播优化、活动宣传、课程演示、音乐 MV。
 > 默认画幅：16:9 / 9:16 / 1:1 / 4:5；常见时长 15–180 秒（MV 跟随歌曲长度）。
 
+> 想直接开始？看 [两种开始方式](#怎么用两种开始方式)；想先找感觉，往下就是 [参考片墙](#参考片墙)。
+
 ---
 
 ## 目录
 
+- [风格库](#风格库)
+- [怎么用：两种开始方式](#怎么用两种开始方式)
 - [为什么是 Storyframe](#为什么是-storyframe)
 - [你能得到什么](#你能得到什么)
 - [六种模式](#六种模式)
-- [风格库](#风格库)
 - [工作流](#工作流)
 - [快速开始](#快速开始)
-- [怎么用：推荐姿势](#怎么用推荐姿势)
 - [项目结构](#项目结构)
 - [工具链](#工具链)
 - [质量门禁](#质量门禁)
@@ -60,81 +62,13 @@
 
 ---
 
-## 为什么是 Storyframe
-
-普通“AI 视频”最容易出的五个问题，以及 Storyframe 的对应做法：
-
-| 问题 | 常见结果 | Storyframe 的做法 |
-|---|---|---|
-| 首帧是空白/半成品 | 平台缩略图废掉，点击率低 | 首帧先做成完整画面，再播动画；自动检查首帧 ink 比例 |
-| 每个镜头长得一样 | 像会动的 PPT | 每个镜头至少一个运动/转场/主体动作；连续静态卡片 ≤ 2 |
-| 画面很满，但没有 claim | 看完记不住，也无法验证 | 一句话承诺 + 每条 claim 记录来源；高风险信息必须确认 |
-| 音乐是后贴的 | 动作和声音不同帧 | 先建 beat map，再让切点/音效落在动作帧 |
-| 只有 MP4，没有工程 | 改一版就重做 | 保留 `plan.json`、素材清单、导出参数、QA 记录 |
-
-一句话：**先把“看完记住什么”定下来，再决定画面。**
-
-## 你能得到什么
-
-| 交付物 | 说明 |
-|---|---|
-| `videos/final.mp4` | H.264 High、`yuv420p`、CRF 16–18、AAC 320 kbps、`+faststart` |
-| `videos/final.srt` | 可关闭字幕；与烧录字幕同源 |
-| `videos/cover.png` | 平台封面/缩略图，单独导出 |
-| `plan.json` | 机器可读的 shots / actions / audio cues；自动检查的输入 |
-| `BRIEF.md` | 目标、受众、平台、必须出现、证据、限制、假设 |
-| `DIRECTION.md` | 选定的方向、视觉规范、镜头表 |
-| `SCRIPT.md` | 逐句/逐行脚本、口播/歌词、来源 |
-| `STORYBOARD.md` | 镜号、时间、画面、动作、声音、转场 |
-| `QA.md` | 自动检查 + 人眼/人耳检查 + 残留风险 |
-| `README.md` | 复现命令、素材来源、导出参数 |
-
-> 不知道自己要什么风格？直接说关键词：`UI电影` `纸感` `动态字体` `像素` `Riso`… 12 种预设见 [风格库](#风格库)。
-
-### 它不会做什么
-
-- 不会把未发布功能伪装成已上线；概念稿必须标注“概念/原型”。
-- 不会用未授权的音乐、字体、素材进入成片。
-- 不会用“电影级”“完美”这类无法验证的词代替验收。
-- 不会把参考片的配色和镜头顺序直接搬过来；只借结构/语法。
-
-## 六种模式
-
-| 模式 | 适合 | 默认时长 | 核心结构 | 主视觉 | 声音 |
-|---|---|---:|---|---|---|
-| `product` | 产品推广、功能发布、SaaS / App | 30–45s | Hook → 痛点 → 真实演示 → 证据 → CTA | 真实 UI、3D 界面、动态字 | 音乐 + 动作音效 |
-| `explainer` | 知识点讲解、科普、方法论 | 60–120s | 问题 → 3 个要点 → 例子 → recap → CTA | 图解、类比、动态字 | 口播 + 轻音乐 |
-| `oral` | 口播优化、访谈、课程口播 | 30–90s | 钩子 → 收紧 → 字幕/B-roll → CTA | 原片、跳剪、放大、关键词 | 人声修复 + 音乐 |
-| `event` | 活动宣传、展会、发布会 | 15–30s | 钩子 → 什么/谁/何时/何地 → CTA | 海报动效、大字、场地 | 高能量音乐 + 冲击 |
-| `course` | 课程演示、软件教学、操作步骤 | 60–180s | 目标 → 步骤 → 结果 → 复习 | 录屏、放大、标注 | 口播 + 点击音 |
-| `mv` | 音乐 MV、品牌主题曲 | 歌曲长度 | Intro → Verse → Chorus → Bridge → Final → Outro | 视觉世界、动态字、3D | 歌曲 + 声音设计 |
-
-混合需求先定 **主模式**，再叠加次模式。例如“活动宣传 + 产品演示”用 `event` 的节奏，借 `product` 的真实 UI；不要同时套两套结构。
-
 ## 风格库
 
-**说一个关键词，直接锁定视觉语法。** 如果不想找参考片，直接说风格。比如：
+**先看片，或直接说关键词。** 参考片墙就在下面；不想找参考片，直接说风格。比如：
 
 > 用 storyframe-video-skill 做一条 30 秒产品片，**UI 电影 + 暗色 + 快节奏**。
 
 我会先加载对应预设，再给 3 个叙事轴不同的方向。风格只决定视觉层：材质、运动、排版、禁忌；故事、证据、时间、声音仍然从产品/主题推导。
-
-### 一句话选风格
-
-| 关键词 | 风格 | 适合 | 参考片 |
-|---|---|---|---|
-| `UI电影` `界面变形` `一镜到底` | **UI Cinema** · 真实界面在状态之间连续变形 | product · explainer | [Ramp HQ](https://skillry.dev/ai-videos/opus-5-5/moritzkremb-466494) · [UI morph](https://skillry.dev/ai-videos/opus-5-5/twoclipping-402193) |
-| `动态字体` `大字` `字随声音` | **Kinetic Type** · 字就是画面，按节拍变形 | event · product · mv | [VOICE WAITING](https://skillry.dev/ai-videos/opus-5-5/gdgtify-929495) · [Spotify](https://skillry.dev/ai-videos/opus-5-5/brainextends-606193) |
-| `3D产品` `产品世界` `材质` | **Product 3D** · 一个 hero 物体，真实材质与相机 | product · event · mv | [phone / frame](https://skillry.dev/ai-videos/opus-5-5/twoclipping-496100) · [3D showreel](https://skillry.dev/ai-videos/opus-5-5/lukasersil-726495) |
-| `编辑排版` `杂志感` `瑞士网格` | **Editorial** · 网格、字号对比、版面即镜头 | product · explainer · event | [“200”](https://skillry.dev/ai-videos/opus-5-5/signalz-jp-918002) · [OBLT](https://skillry.dev/ai-videos/opus-5-5/iamtanzil-120030) |
-| `数据仪器` `HUD` `仪表盘` | **Data Instrument** · 数据像仪器一样被读取 | product · explainer · course | [data list](https://skillry.dev/ai-videos/opus-5-5/heyiammallik-293397) · [chart](https://skillry.dev/ai-videos/opus-5-5/nikolajankovic-616097) |
-| `丝网印` `Riso` `双色印刷` | **Risograph** · 2–4 个专色、错版、纸纹 | event · explainer · mv | [Riso studio](https://skillry.dev/ai-videos/opus-5-5/rneayan-441493) |
-| `纸感` `纸艺` `剪纸` | **Paper Craft** · 纸片、层影、定格 | explainer · event · product | [paper battery](https://x.com/byaiden_vu/status/2104846080722755862) · [shadow theatre](https://skillry.dev/ai-videos/opus-5-5/x4b47x-034026) |
-| `手绘` `绘本` `卡通` | **Hand-drawn** · 线条会呼吸，角色有表演 | explainer · course · event | [ULTRACODE](https://skillry.dev/ai-videos/opus-5-5/daniel-mac8-306214) · [Mid-Autumn](https://skillry.dev/ai-videos/opus-5-5/eric-khun-667455) |
-| `像素` `8-bit` `体素` | **Pixel World** · 16/32 网格、阶梯运动 | explainer · course · event · mv | [pixel wizard](https://skillry.dev/ai-videos/opus-5-5/majidmanzarpour-927543) · [pixel game](https://skillry.dev/ai-videos/opus-5-5/mozetech-471882) |
-| `拼贴` `collage` `混合媒介` | **Collage** · 剪贴、胶带、错位 | mv · event · explainer | [collage](https://skillry.dev/ai-videos/opus-5-5/tomandrieu96707-875264) · [poster collage](https://x.com/hakimieiqbal/status/2103456327636762926) |
-| `复古未来` `CRT` `Y2K` | **Retro Future** · 扫描线、铬字、终端 | event · mv · product | [OPUS 5.5](https://skillry.dev/ai-videos/opus-5-5/johnsavage-ai-427263) · [brand](https://x.com/notdwd/status/2103995183255998633) |
-| `流程` `步骤` `recipe` | **Process Explainer** · 一个流程从空到满 | explainer · course · product | [cocktail](https://skillry.dev/ai-videos/opus-5-5/ror-fly-880547) · [green energy](https://skillry.dev/ai-videos/opus-5-5/sudo-kiran-335993) |
 
 ### 参考片墙
 
@@ -235,6 +169,23 @@
 </tr>
 </table>
 
+### 一句话选风格
+
+| 关键词 | 风格 | 适合 | 参考片 |
+|---|---|---|---|
+| `UI电影` `界面变形` `一镜到底` | **UI Cinema** · 真实界面在状态之间连续变形 | product · explainer | [Ramp HQ](https://skillry.dev/ai-videos/opus-5-5/moritzkremb-466494) · [UI morph](https://skillry.dev/ai-videos/opus-5-5/twoclipping-402193) |
+| `动态字体` `大字` `字随声音` | **Kinetic Type** · 字就是画面，按节拍变形 | event · product · mv | [VOICE WAITING](https://skillry.dev/ai-videos/opus-5-5/gdgtify-929495) · [Spotify](https://skillry.dev/ai-videos/opus-5-5/brainextends-606193) |
+| `3D产品` `产品世界` `材质` | **Product 3D** · 一个 hero 物体，真实材质与相机 | product · event · mv | [phone / frame](https://skillry.dev/ai-videos/opus-5-5/twoclipping-496100) · [3D showreel](https://skillry.dev/ai-videos/opus-5-5/lukasersil-726495) |
+| `编辑排版` `杂志感` `瑞士网格` | **Editorial** · 网格、字号对比、版面即镜头 | product · explainer · event | [“200”](https://skillry.dev/ai-videos/opus-5-5/signalz-jp-918002) · [OBLT](https://skillry.dev/ai-videos/opus-5-5/iamtanzil-120030) |
+| `数据仪器` `HUD` `仪表盘` | **Data Instrument** · 数据像仪器一样被读取 | product · explainer · course | [data list](https://skillry.dev/ai-videos/opus-5-5/heyiammallik-293397) · [chart](https://skillry.dev/ai-videos/opus-5-5/nikolajankovic-616097) |
+| `丝网印` `Riso` `双色印刷` | **Risograph** · 2–4 个专色、错版、纸纹 | event · explainer · mv | [Riso studio](https://skillry.dev/ai-videos/opus-5-5/rneayan-441493) |
+| `纸感` `纸艺` `剪纸` | **Paper Craft** · 纸片、层影、定格 | explainer · event · product | [paper battery](https://x.com/byaiden_vu/status/2104846080722755862) · [shadow theatre](https://skillry.dev/ai-videos/opus-5-5/x4b47x-034026) |
+| `手绘` `绘本` `卡通` | **Hand-drawn** · 线条会呼吸，角色有表演 | explainer · course · event | [ULTRACODE](https://skillry.dev/ai-videos/opus-5-5/daniel-mac8-306214) · [Mid-Autumn](https://skillry.dev/ai-videos/opus-5-5/eric-khun-667455) |
+| `像素` `8-bit` `体素` | **Pixel World** · 16/32 网格、阶梯运动 | explainer · course · event · mv | [pixel wizard](https://skillry.dev/ai-videos/opus-5-5/majidmanzarpour-927543) · [pixel game](https://skillry.dev/ai-videos/opus-5-5/mozetech-471882) |
+| `拼贴` `collage` `混合媒介` | **Collage** · 剪贴、胶带、错位 | mv · event · explainer | [collage](https://skillry.dev/ai-videos/opus-5-5/tomandrieu96707-875264) · [poster collage](https://x.com/hakimieiqbal/status/2103456327636762926) |
+| `复古未来` `CRT` `Y2K` | **Retro Future** · 扫描线、铬字、终端 | event · mv · product | [OPUS 5.5](https://skillry.dev/ai-videos/opus-5-5/johnsavage-ai-427263) · [brand](https://x.com/notdwd/status/2103995183255998633) |
+| `流程` `步骤` `recipe` | **Process Explainer** · 一个流程从空到满 | explainer · course · product | [cocktail](https://skillry.dev/ai-videos/opus-5-5/ror-fly-880547) · [green energy](https://skillry.dev/ai-videos/opus-5-5/sudo-kiran-335993) |
+
 ### 风格修饰词
 
 预设决定“语法”，修饰词只调“语气”。最多叠加 2 个，超过 3 个会互相打架。
@@ -265,6 +216,104 @@
 完整索引在 [awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos)：703 条参考片，按 motion / 3D / explainer / interactive 分类，每条都带原 Prompt 和作者链接。
 
 > 本节的参考片索引与 Prompt 链接来自该项目（MIT）。缩略图、视频、Prompt 版权归各创作者；本仓库只做索引，不复制视频文件。商用前按原作品/素材许可逐项确认。
+
+## 怎么用：两种开始方式
+
+你不需要先学会写分镜。选一种开始就行。
+
+### A. 已经有文案、音乐或素材（最顺）
+
+一次给齐四样：**目标、文案、音乐、素材路径**。
+
+```text
+用 storyframe-video-skill 做一条 30 秒 16:9 官网宣传片。
+文案在 ./copy.md，音乐在 ./music.mp3（已授权商用）。
+产品截图和 Logo 在 ./assets/。
+必须出现：产品名、官网 URL、10 月 24 日发布会。
+不要出现：竞品名、未上线功能。
+```
+
+### B. 只有一句话，或只有一个风格关键词
+
+只有一句话也能开始：
+
+```text
+用 storyframe-video-skill 做一条宣传片，产品是「绘声绘色」。
+```
+
+不想找参考片，就直接说风格：
+
+```text
+用 storyframe-video-skill 做一条 30 秒产品片，UI 电影 + 暗色 + 快节奏。
+```
+
+Agent 会先问三组问题，而不是一次抛 7 个：
+
+1. **要什么片**：类型、平台、画幅、时长；看完希望观众做什么。
+2. **文案**：有没有现成文案/口播稿/歌词/大纲？粘贴或给路径。
+3. **音乐与素材**：有没有音乐/歌曲/配音文件？给路径或链接；产品截图、录屏、Logo、字体、参考片也一起给。也可以直接说风格关键词（`UI电影` / `纸感` / `像素` / `Riso`…）。
+
+你回答“没有/你定”也可以。Agent 会给出默认方案，并写进 `BRIEF.md` 的“假设”。
+
+### 四个 Gate，你只需要在这几个点出现
+
+- **Gate A**：选方向。别说“高级一点”，说“选 B，但强调色换成品牌绿”。
+- **Gate B**：看分镜/animatic。按时间码提：“0–3 秒信息太满，删第二行”。
+- **Gate C**：粗剪。先静音看一遍，再听一遍；画面/声音/字幕分开说。
+- **Gate D**：终版。确认日期、价格、CTA、二维码停留时间。
+
+完整的使用步骤、四种常见起点、每个 Gate 怎么反馈，见 [`references/usage-playbook.md`](references/usage-playbook.md)。
+
+## 为什么是 Storyframe
+
+普通“AI 视频”最容易出的五个问题，以及 Storyframe 的对应做法：
+
+| 问题 | 常见结果 | Storyframe 的做法 |
+|---|---|---|
+| 首帧是空白/半成品 | 平台缩略图废掉，点击率低 | 首帧先做成完整画面，再播动画；自动检查首帧 ink 比例 |
+| 每个镜头长得一样 | 像会动的 PPT | 每个镜头至少一个运动/转场/主体动作；连续静态卡片 ≤ 2 |
+| 画面很满，但没有 claim | 看完记不住，也无法验证 | 一句话承诺 + 每条 claim 记录来源；高风险信息必须确认 |
+| 音乐是后贴的 | 动作和声音不同帧 | 先建 beat map，再让切点/音效落在动作帧 |
+| 只有 MP4，没有工程 | 改一版就重做 | 保留 `plan.json`、素材清单、导出参数、QA 记录 |
+
+一句话：**先把“看完记住什么”定下来，再决定画面。**
+
+## 你能得到什么
+
+| 交付物 | 说明 |
+|---|---|
+| `videos/final.mp4` | H.264 High、`yuv420p`、CRF 16–18、AAC 320 kbps、`+faststart` |
+| `videos/final.srt` | 可关闭字幕；与烧录字幕同源 |
+| `videos/cover.png` | 平台封面/缩略图，单独导出 |
+| `plan.json` | 机器可读的 shots / actions / audio cues；自动检查的输入 |
+| `BRIEF.md` | 目标、受众、平台、必须出现、证据、限制、假设 |
+| `DIRECTION.md` | 选定的方向、视觉规范、镜头表 |
+| `SCRIPT.md` | 逐句/逐行脚本、口播/歌词、来源 |
+| `STORYBOARD.md` | 镜号、时间、画面、动作、声音、转场 |
+| `QA.md` | 自动检查 + 人眼/人耳检查 + 残留风险 |
+| `README.md` | 复现命令、素材来源、导出参数 |
+
+> 不知道自己要什么风格？直接说关键词：`UI电影` `纸感` `动态字体` `像素` `Riso`… 12 种预设见 [风格库](#风格库)。
+
+### 它不会做什么
+
+- 不会把未发布功能伪装成已上线；概念稿必须标注“概念/原型”。
+- 不会用未授权的音乐、字体、素材进入成片。
+- 不会用“电影级”“完美”这类无法验证的词代替验收。
+- 不会把参考片的配色和镜头顺序直接搬过来；只借结构/语法。
+
+## 六种模式
+
+| 模式 | 适合 | 默认时长 | 核心结构 | 主视觉 | 声音 |
+|---|---|---:|---|---|---|
+| `product` | 产品推广、功能发布、SaaS / App | 30–45s | Hook → 痛点 → 真实演示 → 证据 → CTA | 真实 UI、3D 界面、动态字 | 音乐 + 动作音效 |
+| `explainer` | 知识点讲解、科普、方法论 | 60–120s | 问题 → 3 个要点 → 例子 → recap → CTA | 图解、类比、动态字 | 口播 + 轻音乐 |
+| `oral` | 口播优化、访谈、课程口播 | 30–90s | 钩子 → 收紧 → 字幕/B-roll → CTA | 原片、跳剪、放大、关键词 | 人声修复 + 音乐 |
+| `event` | 活动宣传、展会、发布会 | 15–30s | 钩子 → 什么/谁/何时/何地 → CTA | 海报动效、大字、场地 | 高能量音乐 + 冲击 |
+| `course` | 课程演示、软件教学、操作步骤 | 60–180s | 目标 → 步骤 → 结果 → 复习 | 录屏、放大、标注 | 口播 + 点击音 |
+| `mv` | 音乐 MV、品牌主题曲 | 歌曲长度 | Intro → Verse → Chorus → Bridge → Final → Outro | 视觉世界、动态字、3D | 歌曲 + 声音设计 |
+
+混合需求先定 **主模式**，再叠加次模式。例如“活动宣传 + 产品演示”用 `event` 的节奏，借 `product` 的真实 UI；不要同时套两套结构。
 
 ## 工作流
 
@@ -406,49 +455,6 @@ python3 scripts/check_delivery.py plan.json --video videos/final.mp4 \
 ```
 
 自动检查通过 ≠ 好看。画面语义、听感、字幕可读性必须人看、人听、手机看。
-
-## 怎么用：推荐姿势
-
-### 第一次调用：先做素材交接
-
-你不需要先学会写分镜。最顺的方式是一次给齐四样：**目标、文案、音乐、素材路径**。
-
-```text
-用 storyframe-video-skill 做一条 30 秒 16:9 官网宣传片。
-文案在 ./copy.md，音乐在 ./music.mp3（已授权商用）。
-产品截图和 Logo 在 ./assets/。
-必须出现：产品名、官网 URL、10 月 24 日发布会。
-不要出现：竞品名、未上线功能。
-```
-
-如果只给一句话：
-
-```text
-用 storyframe-video-skill 做一条宣传片，产品是「绘声绘色」。
-```
-
-不想找参考片，就直接说风格：
-
-```text
-用 storyframe-video-skill 做一条 30 秒产品片，UI 电影 + 暗色 + 快节奏。
-```
-
-Agent 会先问三组问题，而不是一次抛 7 个：
-
-1. **要什么片**：类型、平台、画幅、时长；看完希望观众做什么。
-2. **文案**：有没有现成文案/口播稿/歌词/大纲？粘贴或给路径。
-3. **音乐与素材**：有没有音乐/歌曲/配音文件？给路径或链接；产品截图、录屏、Logo、字体、参考片也一起给。也可以直接说风格关键词（`UI电影` / `纸感` / `像素` / `Riso`…）。
-
-你回答“没有/你定”也可以。Agent 会给出默认方案，并写进 `BRIEF.md` 的“假设”。
-
-### 四个 Gate，你只需要在这几个点出现
-
-- **Gate A**：选方向。别说“高级一点”，说“选 B，但强调色换成品牌绿”。
-- **Gate B**：看分镜/animatic。按时间码提：“0–3 秒信息太满，删第二行”。
-- **Gate C**：粗剪。先静音看一遍，再听一遍；画面/声音/字幕分开说。
-- **Gate D**：终版。确认日期、价格、CTA、二维码停留时间。
-
-完整的使用步骤、四种常见起点、每个 Gate 怎么反馈，见 [`references/usage-playbook.md`](references/usage-playbook.md)。
 
 ## 项目结构
 
