@@ -68,7 +68,7 @@
 
 先看片找感觉；每张卡都标了关键词，记住关键词就能直接调用。
 
-> 点图看片，点 Prompt 看原始提示词。缩略图、视频、Prompt 版权归各创作者；这里只做索引与链接，不复制视频文件。
+> 点图看片，点作者名看原帖。缩略图、视频版权归各创作者；这里只做索引与链接，不复制视频文件。
 
 <table>
 <tr>
@@ -77,21 +77,21 @@
   <strong>01 · UI 电影</strong><br>
   <sub><code>UI电影</code> <code>界面变形</code></sub><br>
   <sub>product · explainer</sub><br>
-  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/moritzkremb-466494">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/moritzkremb-466494.md">Prompt</a> · <a href="https://x.com/moritzkremb">@moritzkremb</a></sub>
+  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/moritzkremb-466494">看片</a> · <a href="https://x.com/moritzkremb">@moritzkremb</a></sub>
 </td>
 <td width="33%" valign="top">
   <a href="https://skillry.dev/ai-videos/opus-5-5/brainextends-606193"><img src="https://media.skillry.dev/opus-5-5/brainextends-606193/original.f7353b2aa2.webp" width="100%" alt="Kinetic Type reference"></a><br>
   <strong>02 · 动态字体</strong><br>
   <sub><code>动态字体</code> <code>字随声音</code></sub><br>
   <sub>event · product · mv</sub><br>
-  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/brainextends-606193">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/brainextends-606193.md">Prompt</a> · <a href="https://x.com/brainextends">@brainextends</a></sub>
+  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/brainextends-606193">看片</a> · <a href="https://x.com/brainextends">@brainextends</a></sub>
 </td>
 <td width="33%" valign="top">
   <a href="https://skillry.dev/ai-videos/opus-5-5/lukasersil-726495"><img src="https://media.skillry.dev/opus-5-5/lukasersil-726495/original.2886d94586.webp" width="100%" alt="3D showreel reference"></a><br>
   <strong>03 · 3D 产品</strong><br>
   <sub><code>3D产品</code> <code>材质</code></sub><br>
   <sub>product · event · mv</sub><br>
-  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/lukasersil-726495">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/lukasersil-726495.md">Prompt</a> · <a href="https://x.com/lukasersil">@lukasersil</a></sub>
+  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/lukasersil-726495">看片</a> · <a href="https://x.com/lukasersil">@lukasersil</a></sub>
 </td>
 </tr>
 <tr>
@@ -100,21 +100,21 @@
   <strong>04 · 编辑排版</strong><br>
   <sub><code>编辑排版</code> <code>杂志感</code></sub><br>
   <sub>product · explainer · event</sub><br>
-  <sub><a href="https://x.com/notdwd/status/2103995183255998633">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/notdwd-998633.md">Prompt</a> · <a href="https://x.com/notdwd">@notdwd</a></sub>
+  <sub><a href="https://x.com/notdwd/status/2103995183255998633">看片</a> · <a href="https://x.com/notdwd">@notdwd</a></sub>
 </td>
 <td width="33%" valign="top">
   <a href="https://skillry.dev/ai-videos/opus-5-5/heyiammallik-293397"><img src="https://media.skillry.dev/opus-5-5/heyiammallik-293397/original.7068f7995f.webp" width="100%" alt="Data Instrument reference"></a><br>
   <strong>05 · 数据仪器</strong><br>
   <sub><code>数据仪器</code> <code>HUD</code></sub><br>
   <sub>product · explainer · course</sub><br>
-  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/heyiammallik-293397">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/heyiammallik-293397.md">Prompt</a> · <a href="https://x.com/heyiammallik">@heyiammallik</a></sub>
+  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/heyiammallik-293397">看片</a> · <a href="https://x.com/heyiammallik">@heyiammallik</a></sub>
 </td>
 <td width="33%" valign="top">
   <a href="https://skillry.dev/ai-videos/opus-5-5/rneayan-441493"><img src="https://media.skillry.dev/opus-5-5/rneayan-441493/original.334013836e.webp" width="100%" alt="Risograph reference"></a><br>
   <strong>06 · 丝网印</strong><br>
   <sub><code>丝网印</code> <code>Riso</code></sub><br>
   <sub>event · explainer · mv</sub><br>
-  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/rneayan-441493">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/rneayan-441493.md">Prompt</a> · <a href="https://x.com/rneayan">@rneayan</a></sub>
+  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/rneayan-441493">看片</a> · <a href="https://x.com/rneayan">@rneayan</a></sub>
 </td>
 </tr>
 <tr>
@@ -123,21 +123,21 @@
   <strong>07 · 纸感手作</strong><br>
   <sub><code>纸感</code> <code>剪纸</code></sub><br>
   <sub>explainer · event · product</sub><br>
-  <sub><a href="https://x.com/byaiden_vu/status/2104846080722755862">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/byaiden-vu-755862.md">Prompt</a> · <a href="https://x.com/byaiden_vu">@byaiden_vu</a></sub>
+  <sub><a href="https://x.com/byaiden_vu/status/2104846080722755862">看片</a> · <a href="https://x.com/byaiden_vu">@byaiden_vu</a></sub>
 </td>
 <td width="33%" valign="top">
   <a href="https://skillry.dev/ai-videos/opus-5-5/eric-khun-667455"><img src="https://media.skillry.dev/opus-5-5/eric-khun-667455/original.071b07fb62.webp" width="100%" alt="Hand-drawn reference"></a><br>
   <strong>08 · 手绘叙事</strong><br>
   <sub><code>手绘</code> <code>绘本</code></sub><br>
   <sub>explainer · course · event</sub><br>
-  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/eric-khun-667455">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/eric-khun-667455.md">Prompt</a> · <a href="https://x.com/eric_khun">@eric_khun</a></sub>
+  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/eric-khun-667455">看片</a> · <a href="https://x.com/eric_khun">@eric_khun</a></sub>
 </td>
 <td width="33%" valign="top">
   <a href="https://skillry.dev/ai-videos/opus-5-5/mozetech-471882"><img src="https://media.skillry.dev/opus-5-5/mozetech-471882/original.9e4feb7be1.webp" width="100%" alt="Pixel World reference"></a><br>
   <strong>09 · 像素世界</strong><br>
   <sub><code>像素</code> <code>8-bit</code></sub><br>
   <sub>explainer · course · event · mv</sub><br>
-  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/mozetech-471882">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/mozetech-471882.md">Prompt</a> · <a href="https://x.com/MozeTech">@MozeTech</a></sub>
+  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/mozetech-471882">看片</a> · <a href="https://x.com/MozeTech">@MozeTech</a></sub>
 </td>
 </tr>
 <tr>
@@ -146,21 +146,21 @@
   <strong>10 · 拼贴</strong><br>
   <sub><code>拼贴</code> <code>collage</code></sub><br>
   <sub>mv · event · explainer</sub><br>
-  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/tomandrieu96707-875264">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/tomandrieu96707-875264.md">Prompt</a> · <a href="https://x.com/TomAndrieu96707">@TomAndrieu96707</a></sub>
+  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/tomandrieu96707-875264">看片</a> · <a href="https://x.com/TomAndrieu96707">@TomAndrieu96707</a></sub>
 </td>
 <td width="33%" valign="top">
   <a href="https://skillry.dev/ai-videos/opus-5-5/johnsavage-ai-427263"><img src="https://media.skillry.dev/opus-5-5/johnsavage-ai-427263/original.d2b14d5754.webp" width="100%" alt="Retro Future reference"></a><br>
   <strong>11 · 复古未来</strong><br>
   <sub><code>复古未来</code> <code>CRT</code></sub><br>
   <sub>event · mv · product</sub><br>
-  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/johnsavage-ai-427263">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/johnsavage-ai-427263.md">Prompt</a> · <a href="https://x.com/johnsavage_ai">@johnsavage_ai</a></sub>
+  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/johnsavage-ai-427263">看片</a> · <a href="https://x.com/johnsavage_ai">@johnsavage_ai</a></sub>
 </td>
 <td width="33%" valign="top">
   <a href="https://skillry.dev/ai-videos/opus-5-5/sudo-kiran-335993"><img src="https://media.skillry.dev/opus-5-5/sudo-kiran-335993/original.c03cff47d2.webp" width="100%" alt="Process Explainer reference"></a><br>
   <strong>12 · 流程讲解</strong><br>
   <sub><code>流程</code> <code>recipe</code></sub><br>
   <sub>explainer · course · product</sub><br>
-  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/sudo-kiran-335993">看片</a> · <a href="https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/sudo-kiran-335993.md">Prompt</a> · <a href="https://x.com/sudo_kiran">@sudo_kiran</a></sub>
+  <sub><a href="https://skillry.dev/ai-videos/opus-5-5/sudo-kiran-335993">看片</a> · <a href="https://x.com/sudo_kiran">@sudo_kiran</a></sub>
 </td>
 </tr>
 </table>
@@ -264,9 +264,9 @@ Agent 会先问三组问题，而不是一次抛 7 个：
 
 ### 更多参考
 
-完整索引在 [awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos)：703 条参考片，按 motion / 3D / explainer / interactive 分类，每条都带原 Prompt 和作者链接。
+参考片墙只选了 12 种语法各 1 支主片。想看同风格的其他片子，按作者名或作品名在公开平台继续找；只借结构/语法，不复制画面。
 
-> 本节的参考片索引与 Prompt 链接来自该项目（MIT）。缩略图、视频、Prompt 版权归各创作者；本仓库只做索引，不复制视频文件。商用前按原作品/素材许可逐项确认。
+> 参考片链接指向公开作品页或作者页。缩略图、视频版权归各创作者；本仓库只做索引，不复制视频文件。商用前按原作品/素材许可逐项确认。
 
 ## 为什么是 Storyframe
 
@@ -711,8 +711,6 @@ node --check starter/src/config.js
 
 - **绘声绘色 Draw Your Music** — 48.8s 产品推广 MV
 - **一帧亿影 FRAMYRIAD** — 48.0s 产品 MV
-
-参考片索引与 Prompt 来自 [awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos)（MIT）；感谢所有被索引的创作者。
 
 以及所有让“视频成为工程”成为可能的方法、工具和公开参考资料。
 

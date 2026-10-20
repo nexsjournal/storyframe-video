@@ -53,9 +53,9 @@
 **不要：** 假数据、假界面、8 个状态挤进 15 秒、每个元素都 3D 倾斜。
 
 **参考**
-- [moritzkremb — Ramp HQ SaaS 发布](https://skillry.dev/ai-videos/opus-5-5/moritzkremb-466494) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/moritzkremb-466494.md)：真实 UI + 排版切换。
-- [twoclipping — 一个形状 morph 成 8–12 个 UI 状态](https://skillry.dev/ai-videos/opus-5-5/twoclipping-402193) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/twoclipping-402193.md)：媒体播放器作为 morph 目标。
-- [verbove — 暗色 UI 状态叙事](https://skillry.dev/ai-videos/opus-5-5/verbove-268381) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/verbove-268381.md)：用 8–12 个真实 UI 状态讲故事。
+- [moritzkremb — Ramp HQ SaaS 发布](https://skillry.dev/ai-videos/opus-5-5/moritzkremb-466494)：真实 UI + 排版切换。
+- [twoclipping — 一个形状 morph 成 8–12 个 UI 状态](https://skillry.dev/ai-videos/opus-5-5/twoclipping-402193)：媒体播放器作为 morph 目标。
+- [verbove — 暗色 UI 状态叙事](https://skillry.dev/ai-videos/opus-5-5/verbove-268381)：用 8–12 个真实 UI 状态讲故事。
 
 **实现：** 每个 UI 状态一个 DOM 层；用同一个 `border-radius`/容器做跨状态补间；截图前 `window.seek(t)` 固定状态。
 
@@ -81,9 +81,9 @@
 **不要：** 3 种以上字体、花体字、字后面加无意义粒子、每帧都在抖。
 
 **参考**
-- [Gdgtify — VOICE WAITING 口语诗](https://skillry.dev/ai-videos/opus-5-5/gdgtify-929495) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/gdgtify-929495.md)：大字环绕、spoken-word 节奏。
-- [brainextends — Spotify 主题动态图形](https://skillry.dev/ai-videos/opus-5-5/brainextends-606193) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/brainextends-606193.md)：品牌色 + 专辑视觉 + 字体。
-- [techhalla — 黑白绿 typographic bumper](https://skillry.dev/ai-videos/opus-5-5/techhalla-498547) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/techhalla-498547.md)：粗字重、硬切、单色强调。
+- [Gdgtify — VOICE WAITING 口语诗](https://skillry.dev/ai-videos/opus-5-5/gdgtify-929495)：大字环绕、spoken-word 节奏。
+- [brainextends — Spotify 主题动态图形](https://skillry.dev/ai-videos/opus-5-5/brainextends-606193)：品牌色 + 专辑视觉 + 字体。
+- [techhalla — 黑白绿 typographic bumper](https://skillry.dev/ai-videos/opus-5-5/techhalla-498547)：粗字重、硬切、单色强调。
 
 **实现：** 每个词一个绝对定位层；用 `transform` 做位移/缩放/旋转；字与节拍共用一个 `beatMap`，不要各写一套时间。
 
@@ -109,9 +109,9 @@
 **不要：** 漂浮随机几何、假反射、过曝 bloom、镜头一直转。
 
 **参考**
-- [twoclipping — 手机与画框的 3D 产品空间](https://skillry.dev/ai-videos/opus-5-5/twoclipping-496100) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/twoclipping-496100.md)：产品作为空间锚点。
-- [lukasersil — 高饱和 3D showreel](https://skillry.dev/ai-videos/opus-5-5/lukasersil-726495) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/lukasersil-726495.md)：材质/色彩/镜头密度。
-- [twoclipping — 3D 网格里的产品界面](https://skillry.dev/ai-videos/opus-5-5/twoclipping-000267) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/twoclipping-000267.md)：UI 作为 3D 物件。
+- [twoclipping — 手机与画框的 3D 产品空间](https://skillry.dev/ai-videos/opus-5-5/twoclipping-496100)：产品作为空间锚点。
+- [lukasersil — 高饱和 3D showreel](https://skillry.dev/ai-videos/opus-5-5/lukasersil-726495)：材质/色彩/镜头密度。
+- [twoclipping — 3D 网格里的产品界面](https://skillry.dev/ai-videos/opus-5-5/twoclipping-000267)：UI 作为 3D 物件。
 
 **实现：** Three.js 或 Blender 预渲染；固定相机路径；产品贴图用真实截图；输出前检查 logo/文字有没有被材质吃掉。
 
@@ -137,9 +137,9 @@
 **不要：** 小字过多、假报纸、每屏都是不同版式、装饰性英文。
 
 **参考**
-- [signalz_jp — “200” 极简编辑排版](https://skillry.dev/ai-videos/opus-5-5/signalz-jp-918002) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/signalz-jp-918002.md)：数字、细线、留白。
-- [iamtanzil — OBLT E-bike 暗色产品头图](https://skillry.dev/ai-videos/opus-5-5/iamtanzil-120030) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/iamtanzil-120030.md)：产品 + 杂志式标题。
-- [notdwd — 品牌态度海报](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/notdwd-998633.md)：剪贴字、强态度、版面冲突。
+- [signalz_jp — “200” 极简编辑排版](https://skillry.dev/ai-videos/opus-5-5/signalz-jp-918002)：数字、细线、留白。
+- [iamtanzil — OBLT E-bike 暗色产品头图](https://skillry.dev/ai-videos/opus-5-5/iamtanzil-120030)：产品 + 杂志式标题。
+- [notdwd — 品牌态度海报](https://x.com/notdwd/status/2103995183255998633)：剪贴字、强态度、版面冲突。
 
 **实现：** 先画 12 栏网格；所有元素吸附到栏/基线；字号和边距写进 `DESIGN.md`，不要每屏临时调。
 
@@ -165,9 +165,9 @@
 **不要：** 假精度（93.7% 却没来源）、6 个图表同屏、字号小于 18px。
 
 **参考**
-- [heyiammallik — 数据/功能清单式动效](https://skillry.dev/ai-videos/opus-5-5/heyiammallik-293397) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/heyiammallik-293397.md)：列表、数字、高亮。
-- [_nikolajankovic — 手绘图表讲解](https://skillry.dev/ai-videos/opus-5-5/nikolajankovic-616097) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/nikolajankovic-616097.md)：一张图 + 注释 + 结论。
-- [HenriToivar — 像素风流程/图表](https://skillry.dev/ai-videos/opus-5-5/henritoivar-445215) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/henritoivar-445215.md)：把抽象流程变成可读图示。
+- [heyiammallik — 数据/功能清单式动效](https://skillry.dev/ai-videos/opus-5-5/heyiammallik-293397)：列表、数字、高亮。
+- [_nikolajankovic — 手绘图表讲解](https://skillry.dev/ai-videos/opus-5-5/nikolajankovic-616097)：一张图 + 注释 + 结论。
+- [HenriToivar — 像素风流程/图表](https://skillry.dev/ai-videos/opus-5-5/henritoivar-445215)：把抽象流程变成可读图示。
 
 **实现：** 用真实 CSV/JSON 驱动数字；所有标签有单位；先写“观众要记住的 1 个结论”，再选图表。
 
@@ -193,7 +193,7 @@
 **不要：** 4 色以上、干净矢量、渐变、每帧都在抖。
 
 **参考**
-- [rneayan — Risograph 工作室片](https://skillry.dev/ai-videos/opus-5-5/rneayan-441493) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/rneayan-441493.md)：粉/蓝/黑套色、错版、纸感。
+- [rneayan — Risograph 工作室片](https://skillry.dev/ai-videos/opus-5-5/rneayan-441493)：粉/蓝/黑套色、错版、纸感。
 
 **实现：** 每个专色一层 Canvas/SVG；用 `mix-blend-mode: multiply`；叠加纸纹和 1–3px 随机偏移；输出前检查文字仍然可读。
 
@@ -219,8 +219,8 @@
 **不要：** 完美矢量边缘、塑料光泽、所有元素同一速度。
 
 **参考**
-- [byaiden_vu — 纸片电池/充电循环](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/byaiden-vu-755862.md)：纸片分层、手绘标注、定格感。
-- [x4b47x — 纸影剧院](https://skillry.dev/ai-videos/opus-5-5/x4b47x-034026) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/x4b47x-034026.md)：剪纸剪影 + 灯光 + 舞台。
+- [byaiden_vu — 纸片电池/充电循环](https://x.com/byaiden_vu/status/2104846080722755862)：纸片分层、手绘标注、定格感。
+- [x4b47x — 纸影剧院](https://skillry.dev/ai-videos/opus-5-5/x4b47x-034026)：剪纸剪影 + 灯光 + 舞台。
 
 **实现：** 纸张纹理叠加 + `drop-shadow` 分层；每层独立位移；抽帧到 12/15fps；边缘用 SVG turbulence 或手绘遮罩。
 
@@ -246,9 +246,9 @@
 **不要：** AI 塑料感、角色比例每镜变、背景比角色花。
 
 **参考**
-- [daniel_mac8 — ULTRACODE 卡通开场](https://skillry.dev/ai-videos/opus-5-5/daniel-mac8-306214) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/daniel-mac8-306214.md)：场记板、角色、手绘标题。
-- [eric_khun — 中秋手绘动画](https://skillry.dev/ai-videos/opus-5-5/eric-khun-667455) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/eric-khun-667455.md)：节日、角色、暖色。
-- [superalesha — 雾中刺猬式手绘短片](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/superalesha-970412.md)：氛围、颗粒、手绘质感。
+- [daniel_mac8 — ULTRACODE 卡通开场](https://skillry.dev/ai-videos/opus-5-5/daniel-mac8-306214)：场记板、角色、手绘标题。
+- [eric_khun — 中秋手绘动画](https://skillry.dev/ai-videos/opus-5-5/eric-khun-667455)：节日、角色、暖色。
+- [superalesha — 雾中刺猬式手绘短片](https://x.com/superalesha/status/2103052154931970412)：氛围、颗粒、手绘质感。
 
 **实现：** 用 SVG 手绘线条 + 每 2–3 帧轻微扰动；角色分层（身体/头/手）；背景水彩纹理；输出 12fps 再补到 30fps。
 
@@ -274,8 +274,8 @@
 **不要：** 高清贴图、平滑光影、极小像素字、3D 景深。
 
 **参考**
-- [majidmanzarpour — 像素巫师施法](https://skillry.dev/ai-videos/opus-5-5/majidmanzarpour-927543) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/majidmanzarpour-927543.md)：像素角色、特效、夜景。
-- [MozeTech — 像素游戏场景](https://skillry.dev/ai-videos/opus-5-5/mozetech-471882) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/mozetech-471882.md)：地图、UI、任务提示。
+- [majidmanzarpour — 像素巫师施法](https://skillry.dev/ai-videos/opus-5-5/majidmanzarpour-927543)：像素角色、特效、夜景。
+- [MozeTech — 像素游戏场景](https://skillry.dev/ai-videos/opus-5-5/mozetech-471882)：地图、UI、任务提示。
 
 **实现：** Canvas 关闭 `imageSmoothingEnabled`；所有坐标取整；调色板写死；用 `image-rendering: pixelated`。
 
@@ -301,9 +301,9 @@
 **不要：** 素材堆满、没有焦点、用未授权图片、每块都在动。
 
 **参考**
-- [TomAndrieu96707 — 异想天开手绘拼贴](https://skillry.dev/ai-videos/opus-5-5/tomandrieu96707-875264) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/tomandrieu96707-875264.md)：手绘 + 剪贴 + 叙事。
-- [hakimieiqbal — 海报拼贴](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/hakimieiqbal-762926.md)：人物、贴纸、手写标注。
-- [anabology — 剪贴字 + 人像态度海报](https://skillry.dev/ai-videos/opus-5-5/anabology-491441) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/anabology-491441.md)：字形剪贴、强对比。
+- [TomAndrieu96707 — 异想天开手绘拼贴](https://skillry.dev/ai-videos/opus-5-5/tomandrieu96707-875264)：手绘 + 剪贴 + 叙事。
+- [hakimieiqbal — 海报拼贴](https://x.com/hakimieiqbal/status/2103456327636762926)：人物、贴纸、手写标注。
+- [anabology — 剪贴字 + 人像态度海报](https://skillry.dev/ai-videos/opus-5-5/anabology-491441)：字形剪贴、强对比。
 
 **实现：** 每个元素一张透明 PNG；随机 1–3° 旋转；用纸张纹理/胶带贴图；限制同时运动元素 ≤ 3。
 
@@ -329,9 +329,9 @@
 **不要：** 全程 glitch、字看不清、蓝紫渐变、假 UI 堆满。
 
 **参考**
-- [johnsavage_ai — OPUS 5.5 铬字发布](https://skillry.dev/ai-videos/opus-5-5/johnsavage-ai-427263) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/johnsavage-ai-427263.md)：暗底、铬字、CRT 光晕。
-- [notdwd — 品牌态度/剪贴字](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/notdwd-998633.md)：强字重、版面冲突、复古印刷。
-- [techhalla — 黑白绿字效 bumper](https://skillry.dev/ai-videos/opus-5-5/techhalla-498547) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/techhalla-498547.md)：单色、硬切、终端感。
+- [johnsavage_ai — OPUS 5.5 铬字发布](https://skillry.dev/ai-videos/opus-5-5/johnsavage-ai-427263)：暗底、铬字、CRT 光晕。
+- [notdwd — 品牌态度/剪贴字](https://x.com/notdwd/status/2103995183255998633)：强字重、版面冲突、复古印刷。
+- [techhalla — 黑白绿字效 bumper](https://skillry.dev/ai-videos/opus-5-5/techhalla-498547)：单色、硬切、终端感。
 
 **实现：** 后处理加 scanlines/色差/噪点；glitch 用位移切片，控制在 1–3 帧；字幕层不参与 glitch。
 
@@ -357,9 +357,9 @@
 **不要：** 7 条 bullet、假流程图、没有完成态、步骤跳太快。
 
 **参考**
-- [Ror_Fly — 鸡尾酒配方流程](https://skillry.dev/ai-videos/opus-5-5/ror-fly-880547) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/ror-fly-880547.md)：空杯到完成，原料/计量可见。
-- [sudo_kiran — 绿色能源流程讲解](https://skillry.dev/ai-videos/opus-5-5/sudo-kiran-335993) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/sudo-kiran-335993.md)：图解 + 口播 + 能量流。
-- [HenriToivar — 像素风流程/图表](https://skillry.dev/ai-videos/opus-5-5/henritoivar-445215) · [Prompt](https://github.com/yihui-dev/awesome-opus5-5-videos/blob/main/prompts/henritoivar-445215.md)：步骤、图标、递进状态。
+- [Ror_Fly — 鸡尾酒配方流程](https://skillry.dev/ai-videos/opus-5-5/ror-fly-880547)：空杯到完成，原料/计量可见。
+- [sudo_kiran — 绿色能源流程讲解](https://skillry.dev/ai-videos/opus-5-5/sudo-kiran-335993)：图解 + 口播 + 能量流。
+- [HenriToivar — 像素风流程/图表](https://skillry.dev/ai-videos/opus-5-5/henritoivar-445215)：步骤、图标、递进状态。
 
 **实现：** 先画“开始态/结束态”两张图；中间状态用同一坐标系补间；标签锚定物体；每个步骤一个时间窗。
 
@@ -392,4 +392,4 @@
 
 ## 参考与授权
 
-本文件的参考片索引、Prompt 链接来自 [awesome-opus5-5-videos](https://github.com/yihui-dev/awesome-opus5-5-videos)（MIT）。缩略图、视频、Prompt 版权归各创作者；本仓库只做索引和链接，不复制视频文件。商用前请按原作品/素材的许可逐项确认。
+本文件的参考片链接指向公开作品页或作者页。缩略图、视频版权归各创作者；本仓库只做索引和链接，不复制视频文件。商用前请按原作品/素材的许可逐项确认。
