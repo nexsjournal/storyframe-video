@@ -11,6 +11,8 @@
 - Primary mode：`product / explainer / oral / event / course / mv`
 - Secondary mode（可选）：
 - 为什么选这个模式：
+- 风格关键词（可选）：`UI电影 / 纸感 / 动态字体 / 像素 / Riso…`
+- 风格预设 / 修饰词：
 
 ## 3. 受众与平台
 

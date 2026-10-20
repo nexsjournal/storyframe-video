@@ -18,7 +18,7 @@
 
   <g font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
     <text x="64" y="72" fill="#17141A" fill-opacity="0.62" font-size="15" font-weight="700" letter-spacing="4">STORYFRAME / AGENT SKILL</text>
-    <text x="1136" y="72" text-anchor="end" fill="#17141A" fill-opacity="0.52" font-size="14" font-weight="600" letter-spacing="2.4">V1.1.0</text>
+    <text x="1136" y="72" text-anchor="end" fill="#17141A" fill-opacity="0.52" font-size="14" font-weight="600" letter-spacing="2.4">V1.2.0</text>
 
     <text x="62" y="196" fill="#17141A" font-size="104" font-weight="800" letter-spacing="-5">Storyframe<tspan fill="#F2416B">.</tspan></text>
     <text x="66" y="246" fill="#17141A" fill-opacity="0.78" font-size="24" font-weight="500">A production system for videos made by agents.</text>
