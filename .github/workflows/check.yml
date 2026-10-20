@@ -31,6 +31,11 @@ jobs:
           test -f "$RUNNER_TEMP/demo/plan.json"
           test -f "$RUNNER_TEMP/demo/BRIEF.md"
 
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
       - name: Test user asset handoff
         run: |
           printf '# CI copy\n\nKeep this line.\n' > "$RUNNER_TEMP/copy.md"
