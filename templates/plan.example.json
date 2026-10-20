@@ -1,0 +1,114 @@
+{
+  "title": "[TITLE]",
+  "mode": "product",
+  "duration": 7.5,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "language": "zh",
+  "audience": "[AUDIENCE]",
+  "platform": "web",
+  "cta": "[CTA]",
+  "style": {
+    "palette": [
+      "#F6F1E6",
+      "#17141A",
+      "#F2416B"
+    ],
+    "type": "display/body",
+    "motion": "push/stagger/scan"
+  },
+  "shots": [
+    {
+      "id": "s01",
+      "start": 0.0,
+      "end": 2.5,
+      "description": "完整首帧：主题标题 + 品牌 + 一个可识别的视觉主体",
+      "descriptionAt": 0.0,
+      "transition": "cut",
+      "claim": "示例：真实产品界面",
+      "source": "assets/cover.png",
+      "actions": [
+        {
+          "id": "a01",
+          "at": 0.4,
+          "description": "笔刷从左侧落下"
+        }
+      ]
+    },
+    {
+      "id": "s02",
+      "start": 2.5,
+      "end": 5.0,
+      "description": "第二镜：一个核心动作/结果，镜头持续运动",
+      "descriptionAt": 2.5,
+      "transition": "scan",
+      "claim": "示例：功能结果",
+      "source": "assets/demo.png",
+      "actions": [
+        {
+          "id": "a02",
+          "at": 3.2,
+          "description": "扫描线划过，颜色点亮"
+        }
+      ]
+    },
+    {
+      "id": "s03",
+      "start": 5.0,
+      "end": 7.5,
+      "description": "结尾：一句 CTA + 日期/二维码，停留至少 3 秒",
+      "descriptionAt": 5.0,
+      "transition": "cut",
+      "claim": "示例：活动信息",
+      "source": "assets/endcard.png",
+      "actions": [
+        {
+          "id": "a03",
+          "at": 5.1,
+          "description": "结束卡信息落版"
+        }
+      ]
+    }
+  ],
+  "audio": {
+    "music": {
+      "file": "audio/music.wav",
+      "source": "user-provided",
+      "license": "TBD",
+      "bpm": 124,
+      "gain_db": -18
+    },
+    "cues": [
+      {
+        "at": 0.4,
+        "kind": "brush",
+        "gain_db": -14,
+        "pan": 0,
+        "actionId": "a01",
+        "syncOffset": 0,
+        "file": "audio/sfx/brush.wav"
+      },
+      {
+        "at": 3.2,
+        "kind": "scan",
+        "gain_db": -15,
+        "pan": 0,
+        "actionId": "a02",
+        "syncOffset": 0,
+        "file": "audio/sfx/scan.wav"
+      },
+      {
+        "at": 5.1,
+        "kind": "impact",
+        "gain_db": -10,
+        "pan": 0,
+        "actionId": "a03",
+        "syncOffset": -0.02,
+        "file": "audio/sfx/impact.wav"
+      }
+    ],
+    "targetLufs": -14,
+    "truePeakDbtp": -1.0
+  }
+}

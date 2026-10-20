@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-labelledby="title desc">
+  <title id="title">Storyframe — a production system for videos made by agents</title>
+  <desc id="desc">Off-white banner with a grid, the word Storyframe, and the line story, evidence, time, sound.</desc>
+  <defs>
+    <linearGradient id="warm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F7F2E8"/>
+      <stop offset="0.55" stop-color="#FBF8F1"/>
+      <stop offset="1" stop-color="#F6E9E4"/>
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#17141A" stroke-opacity="0.06" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="340" fill="url(#warm)"/>
+  <rect width="1200" height="340" fill="url(#grid)"/>
+  <rect x="0" y="330" width="1200" height="10" fill="#F2416B"/>
+
+  <g font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+    <text x="64" y="72" fill="#17141A" fill-opacity="0.62" font-size="15" font-weight="700" letter-spacing="4">STORYFRAME / AGENT SKILL</text>
+    <text x="1136" y="72" text-anchor="end" fill="#17141A" fill-opacity="0.52" font-size="14" font-weight="600" letter-spacing="2.4">V1.1.0</text>
+
+    <text x="62" y="196" fill="#17141A" font-size="104" font-weight="800" letter-spacing="-5">Storyframe<tspan fill="#F2416B">.</tspan></text>
+    <text x="66" y="246" fill="#17141A" fill-opacity="0.78" font-size="24" font-weight="500">A production system for videos made by agents.</text>
+
+    <g font-size="14" font-weight="700" letter-spacing="2.8" fill="#17141A" fill-opacity="0.62">
+      <text x="66" y="304">STORY</text>
+      <text x="176" y="304">EVIDENCE</text>
+      <text x="322" y="304">TIME</text>
+      <text x="422" y="304">SOUND</text>
+      <text x="548" y="304">SHIP</text>
+    </g>
+    <g fill="#F2416B">
+      <circle cx="146" cy="299" r="3"/>
+      <circle cx="292" cy="299" r="3"/>
+      <circle cx="392" cy="299" r="3"/>
+      <circle cx="518" cy="299" r="3"/>
+    </g>
+  </g>
+</svg>

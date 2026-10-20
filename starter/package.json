@@ -1,0 +1,12 @@
+{
+  "name": "storyframe-starter",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "still": "node still.mjs",
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "^1.64.1"
+  }
+}

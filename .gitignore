@@ -1,0 +1,16 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+node_modules/
+.env
+.env.*
+frames/
+videos/*.mp4
+renders/*.png
+audio/*.wav
+
+# internal design notes (never publish)
+.internal/

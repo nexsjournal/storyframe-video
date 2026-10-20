@@ -1,0 +1,66 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Compile Python
+        run: python -m compileall -q scripts
+
+      - name: Create a project from templates
+        run: |
+          python scripts/init_project.py \
+            --output "$RUNNER_TEMP/demo" \
+            --mode product \
+            --title "CI Demo" \
+            --duration 12
+          test -f "$RUNNER_TEMP/demo/plan.json"
+          test -f "$RUNNER_TEMP/demo/BRIEF.md"
+
+      - name: Test user asset handoff
+        run: |
+          printf '# CI copy\n\nKeep this line.\n' > "$RUNNER_TEMP/copy.md"
+          ffmpeg -hide_banner -loglevel error -f lavfi -i "sine=frequency=440:duration=3" "$RUNNER_TEMP/music.wav"
+          python scripts/init_project.py \
+            --output "$RUNNER_TEMP/handoff" \
+            --mode mv \
+            --title "Handoff" \
+            --script "$RUNNER_TEMP/copy.md" \
+            --music "$RUNNER_TEMP/music.wav"
+          test -f "$RUNNER_TEMP/handoff/SOURCES.json"
+          test -f "$RUNNER_TEMP/handoff/audio/music.wav"
+          test -f "$RUNNER_TEMP/handoff/assets/copy/copy.md"
+          python -c "import json; p=json.load(open('$RUNNER_TEMP/handoff/plan.json')); assert p['audio']['music']['file'] == 'audio/music.wav'; assert abs(p['duration'] - 3.0) < 0.2, p['duration']; print('handoff ok', p['duration'])"
+
+      - name: Script help / smoke
+        run: |
+          python scripts/check_delivery.py --help
+          python scripts/lyric_budget.py --help
+          python scripts/contact_sheet.py --help
+          python scripts/loudness.py --help
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check starter JavaScript syntax
+        run: |
+          node --check starter/render.mjs
+          node --check starter/still.mjs
+          node --check starter/server.mjs
+          node --check starter/src/main.js
+          node --check starter/src/config.js
