@@ -4,7 +4,9 @@
   "type": "module",
   "scripts": {
     "still": "node still.mjs",
-    "render": "node render.mjs"
+    "still:preview": "node still.mjs --preview",
+    "render": "node render.mjs",
+    "preview": "node render.mjs --preview"
   },
   "dependencies": {
     "playwright-core": "^1.64.1"

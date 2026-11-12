@@ -261,7 +261,8 @@ def main() -> int:
     print("  2. fill DIRECTION.md and edit STORYBOARD.md / plan.json")
     print("  3. add remaining assets/; keep user music as-is (do not replace it)")
     print("  4. copy <skill-dir>/starter/ into this project for a 7.5s demo, or build src/ yourself")
-    print("  5. python3 <skill-dir>/scripts/check_delivery.py plan.json --video videos/final.mp4")
+    print("  5. render a 640x360 preview first: node render.mjs --from 0 --to <duration> --preview")
+    print("  6. python3 <skill-dir>/scripts/check_delivery.py plan.json --video videos/final.mp4")
     return 0
 
 

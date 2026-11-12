@@ -4,7 +4,7 @@
   <p><strong>把视频当成一个工程，而不是会动的 PPT。</strong><br />
   故事 · 证据 · 时间 · 声音 · 验收</p>
   <p>
-    <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.2.0-F2416B?style=flat-square" alt="Version 1.2.0" /></a>
+    <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.3.0-F2416B?style=flat-square" alt="Version 1.3.0" /></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-17141A?style=flat-square" alt="MIT License" /></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.10+" />
     <img src="https://img.shields.io/badge/node-20%2B-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node 20+" />
@@ -58,6 +58,7 @@
 - [素材与工具](#素材与工具)
 - [设计原则](#设计原则)
 - [FAQ](#faq)
+- [发布（维护者）](#发布维护者)
 - [Contributing](#contributing)
 - [License](#license)
 - [Credits](#credits)
@@ -181,6 +182,12 @@
 不要出现：竞品名、未上线功能。
 ```
 
+如果你连 prompt / 分镜都写好了，再加一句：
+
+> 按这个 prompt 做，不要改文案；只做一个方向，先给 640 长边预览。
+
+这就是**快车道**：不生成 3 个方向，不做 1080p 对比图，先出低分辨率预览，再终渲。60 秒片通常 12–20 分钟；细节见 [快车道](references/fast-lane.md)。
+
 ### B. 只有一句话，或只有一个风格关键词
 
 只有一句话也能开始：
@@ -205,12 +212,14 @@ Agent 会先问三组问题，而不是一次抛 7 个：
 
 ### 四个 Gate：你只需要在这些点出现
 
+> 输入已齐、走快车道时，不需要逐个过四个 Gate：只需要 **P1 首帧**（可跳过）和 **P2 预览**。下面是探索型项目的标准 Gate。
+
 - **Gate A**：选方向。别说“高级一点”，说“选 B，但强调色换成品牌绿”。
 - **Gate B**：看分镜/animatic。按时间码提：“0–3 秒信息太满，删第二行”。
 - **Gate C**：粗剪。先静音看一遍，再听一遍；画面/声音/字幕分开说。
 - **Gate D**：终版。确认日期、价格、CTA、二维码停留时间。
 
-完整的使用步骤、四种常见起点、每个 Gate 怎么反馈，见 [`references/usage-playbook.md`](references/usage-playbook.md)。
+完整的使用步骤、五种常见起点、每个 Gate 怎么反馈，见 [`references/usage-playbook.md`](references/usage-playbook.md)。
 
 ## 风格库
 
@@ -218,7 +227,7 @@ Agent 会先问三组问题，而不是一次抛 7 个：
 
 > 用 storyframe-video-skill 做一条 30 秒产品片，**UI 电影 + 暗色 + 快节奏**。
 
-我会先加载对应预设，再给 3 个叙事轴不同的方向。风格只决定视觉层：材质、运动、排版、禁忌；故事、证据、时间、声音仍然从产品/主题推导。
+我会先加载对应预设；探索型项目给 3 个叙事轴不同的方向，输入已齐的快车道只锁 1 个方向。风格只决定视觉层：材质、运动、排版、禁忌；故事、证据、时间、声音仍然从产品/主题推导。
 
 ### 一句话选风格
 
@@ -321,6 +330,8 @@ Agent 会先问三组问题，而不是一次抛 7 个：
 
 ## 工作流
 
+> 如果 prompt / 文案 / 素材 / 音乐都已给齐，走 [快车道](references/fast-lane.md)：跳过 Research、3 个方向、animatic 和 1080p rough cut；先出 640 长边预览，再终渲。下面是探索型项目的完整流程。
+
 ```mermaid
 flowchart LR
   I["0 · Intake"] --> R["1 · Research"]
@@ -354,6 +365,8 @@ flowchart LR
 | 10 Deliver | 交付 MP4 + 封面 + SRT + 工程 + README | 可复现包 |
 
 ### 四个 Gate
+
+> 快车道只有两个人工点：P1 首帧（可跳过）+ P2 640 长边预览。下表是标准流程的 Gate。
 
 | Gate | 位置 | 通过标准 |
 |---|---|---|
@@ -405,7 +418,17 @@ ln -s /path/to/storyframe-video ~/.agents/skills/storyframe-video-skill
 
 > 目录名建议用 `storyframe-video-skill`，与 `SKILL.md` 的 `name` 一致。不同 Agent 的技能目录不同，只要是“包含 `SKILL.md` 的文件夹”即可。
 
-### 2. 60 秒建一个工程
+### 2. 从技能市场安装
+
+本 skill 发布在 [SkillHub](https://www.skillhub.cn/skills/storyframe-video)（slug：`storyframe-video`）：
+
+```sh
+skillhub install storyframe-video
+```
+
+**WorkBuddy：** 左侧「专家·技能·连接器」→「技能」→ 市场里的 SkillHub 分类搜 “Storyframe”；或用本仓库的 `dist/storyframe-video-skill.zip`，走「添加技能」→「上传技能」。
+
+### 3. 60 秒建一个工程
 
 ```sh
 git clone git@github.com:nexsjournal/storyframe-video.git
@@ -425,17 +448,36 @@ python3 scripts/init_project.py \
 
 没有文案或音乐时，删掉对应的 `--script` / `--music` 即可。`init_project.py` 会生成模板、目录、`plan.json` 骨架，以及 `SOURCES.json`（记录用户素材的来源与复制位置）。
 
-### 3. 跑通 starter
+### 4. 先预览，再终渲
+
+```sh
+cd ~/Videos/my-film
+cp -R <skill-dir>/starter/* .
+npm install
+
+# 640×360、12fps、veryfast；只看结构
+node render.mjs --from 0 --to 30 --preview   --audio audio/music.mp3 --output videos/preview.mp4
+
+# 结构确认后，再出 1080p 终版
+node render.mjs --from 0 --to 30   --audio audio/music.mp3 --output videos/final.mp4
+```
+
+不要先用 `--preset slow` 渲完整片，也不要用 1080p 静帧做方向对比；低分辨率预览能看出的问题，不要留到终版。
+
+### 4. 跑通 starter
 
 ```sh
 cp -R starter/. ~/Videos/my-film/
 cd ~/Videos/my-film
 npm install
 
-# 预览静帧
-node still.mjs 0 1 4.2 7.4
+# 预览静帧：640 长边 JPEG，输出到 renders/preview/
+node still.mjs 0 1 4.2 7.4 --preview
 
-# 渲染 7.5 秒测试片
+# 低分辨率预览：640×360、12fps、veryfast
+node render.mjs --from 0 --to 7.5 --preview --output videos/preview.mp4
+
+# 结构确认后再渲 1080p 测试片
 node render.mjs --from 0 --to 7.5 --fps 30 --output videos/test.mp4
 ```
 
@@ -449,7 +491,7 @@ export CHROME_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
 
 `render.mjs` / `still.mjs` 会自动探测常见 Chrome/Chromium 路径。
 
-### 4. 检查交付
+### 5. 检查交付
 
 ```sh
 python3 scripts/contact_sheet.py videos/final.mp4 --out renders/contact.png --fps 1
@@ -470,7 +512,8 @@ python3 scripts/check_delivery.py plan.json --video videos/final.mp4 \
 ├── README.md                 本文件
 ├── CHANGELOG.md              版本记录
 ├── LICENSE                   MIT
-├── references/               14 份方法文档
+├── references/               15 份方法文档
+│   ├── fast-lane.md          输入已齐时的快车道：5 阶段、2 个人工点
 │   ├── usage-playbook.md     用户怎么用、怎么给反馈
 │   ├── intake-and-modes.md   Intake、六种模式、素材清单
 │   ├── direction.md          参考拆解、三个方向、专属手法
@@ -488,12 +531,14 @@ python3 scripts/check_delivery.py plan.json --video videos/final.mp4 \
 ├── scripts/                  Python 工具
 │   ├── init_project.py       建工程、接收文案/音乐
 │   ├── lyric_budget.py       BPM / 小节 / 字数 / 行长
-│   ├── contact_sheet.py      联系表
+│   ├── contact_sheet.py      视频联系表
+│   ├── still_sheet.py        静帧对比表（方向/风格）
 │   ├── loudness.py           Integrated / True Peak / LRA
 │   └── check_delivery.py     plan / 媒体 / 首帧 / 黑帧 / 响度 / 字幕
 ├── templates/                项目模板（BRIEF / DIRECTION / SCRIPT / STORYBOARD / QA / Suno / plan）
 ├── starter/                  Playwright + ffmpeg 最小确定性渲染工程
 ├── docs/assets/              README 配图
+├── tools/package_skill.py    发布打包与校验（SkillHub / WorkBuddy）
 └── .github/workflows/check.yml
 ```
 
@@ -527,7 +572,8 @@ my-film/
 |---|---|---|
 | [`init_project.py`](scripts/init_project.py) | 建工程、复制模板、接收文案/音乐 | `python3 scripts/init_project.py --output ./my-film --mode product --title "..." --script ./copy.md --music ./music.mp3` |
 | [`lyric_budget.py`](scripts/lyric_budget.py) | Suno 歌词：BPM / 小节 / 时长 / 字数 / 行长 / Hook | `python3 scripts/lyric_budget.py lyrics.md --bpm 124 --bars 27 --hook "绘声绘色，画就会唱"` |
-| [`contact_sheet.py`](scripts/contact_sheet.py) | 1–2 fps 联系表，检查整体节奏 | `python3 scripts/contact_sheet.py videos/final.mp4 --out renders/contact.png --fps 1` |
+| [`contact_sheet.py`](scripts/contact_sheet.py) | 1–2 fps 视频联系表，检查整体节奏 | `python3 scripts/contact_sheet.py videos/final.mp4 --out renders/contact.png --fps 1` |
+| [`still_sheet.py`](scripts/still_sheet.py) | 多张静帧拼一张带标签的对比表；方向对比不逐张发 | `python3 scripts/still_sheet.py renders/preview/*.jpg --out renders/compare.png --label` |
 | [`loudness.py`](scripts/loudness.py) | Integrated / True Peak / LRA | `python3 scripts/loudness.py videos/final.mp4 --json` |
 | [`check_delivery.py`](scripts/check_delivery.py) | plan / 媒体 / 首帧 / 黑帧 / 响度 / 字幕检查 | `python3 scripts/check_delivery.py plan.json --video videos/final.mp4 --captions videos/final.srt` |
 
@@ -660,6 +706,22 @@ python3 scripts/lyric_budget.py lyrics.md --bpm 124 --bars 27 \
 
 </details>
 
+## 发布（维护者）
+
+`SKILL.md` 的 front matter 同时承载 Agent 元数据（`name` / `description`）和 SkillHub 发布元数据（`slug` / `displayName` / `version` / `summary` / `license` / `homepage` / `tags`）。改版本时同时更新 `VERSION` 与 `CHANGELOG.md`，然后：
+
+```sh
+python3 tools/package_skill.py          # 校验元数据/链接/敏感路径，生成 dist/ 目录与 zip
+skillhub publish dist/storyframe-video-skill --dry-run
+skillhub publish dist/storyframe-video-skill --changelog "本次变更"
+```
+
+- **SkillHub 网页端**也可以直接上传 `dist/storyframe-video-skill-<version>.zip`（开发者中心 → 发布技能）。
+- **WorkBuddy** 用 `dist/storyframe-video-skill.zip`：文件名会作为技能名，所以不要带版本号。
+- 公开上架 WorkBuddy 技能市场要走开放平台（`open.workbuddy.cn`，需个人或企业认证）；桌面端「上传技能」只是自用/团队导入，不会出现在公开市场。
+- 压缩包只含白名单内容：`.internal/`、`.github/`、`tools/`、`.git/`、`__pycache__/` 不会被打包。
+- 首次发布需要 API Token：`tools/publish_skillhub.sh` 会交互读取 Token（不回显、不进 shell 历史），也可以手动 `skillhub login --key skh_xxx --host https://api.skillhub.cn`；平台要求账号已实名。
+
 ## Contributing
 
 欢迎 issue / PR，尤其是：
@@ -683,6 +745,7 @@ python3 scripts/init_project.py \
 python3 scripts/check_delivery.py --help
 python3 scripts/lyric_budget.py --help
 python3 scripts/contact_sheet.py --help
+python3 scripts/still_sheet.py --help
 python3 scripts/loudness.py --help
 
 node --check starter/render.mjs

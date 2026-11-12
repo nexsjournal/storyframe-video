@@ -56,6 +56,7 @@ jobs:
           python scripts/check_delivery.py --help
           python scripts/lyric_budget.py --help
           python scripts/contact_sheet.py --help
+          python scripts/still_sheet.py --help
           python scripts/loudness.py --help
 
       - uses: actions/setup-node@v5

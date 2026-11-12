@@ -14,3 +14,10 @@ audio/*.wav
 
 # internal design notes (never publish)
 .internal/
+
+# 发布产物
+dist/
+
+# generated preview frames / stills
+renders/preview/
+starter/renders/

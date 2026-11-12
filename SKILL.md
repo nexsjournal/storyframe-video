@@ -1,5 +1,19 @@
 ---
 name: storyframe-video-skill
+slug: storyframe-video
+displayName: Storyframe 视频生产系统
+# WorkBuddy 开放平台使用下划线字段名；与 SkillHub 的 displayName 并存不影响解析
+display_name: Storyframe 视频生产系统
+display_name_en: Storyframe Video
+category: Design Tools
+description_zh: 从 brief、文案、音乐到 15–180 秒成片：六种模式、12 种风格预设、确定性渲染与自动质检。
+description_en: A production system for agent-made videos, from brief and script to storyboard, sound, deterministic rendering, and QA.
+author: nexsjournal
+version: 1.3.0
+summary: 从 brief、文案、音乐到成片的视频生产系统：方向、分镜、节拍、Suno 歌词、Playwright + ffmpeg 确定性渲染与自动质检；输入已齐可走快车道，先低分辨率预览再终渲。
+license: MIT
+homepage: https://github.com/nexsjournal/storyframe-video
+tags: [video, product-video, motion-graphics, storyboard, ffmpeg, playwright, suno, mv]
 description: 从 brief 到成片的标准视频生产系统，覆盖产品推广、知识讲解、口播优化、活动宣传、课程演示和音乐 MV。先接收并核验用户提供的文案、音乐、录屏、截图、Logo 与参考片，再用真实素材、故事方向、分镜、节拍表、声音设计和验收清单，产出 15–180 秒的 16:9 / 9:16 / 1:1 成片；包含 Suno 歌词制作单、Playwright + ffmpeg 确定性渲染和自动质检。当用户要求做宣传片、讲解片、活动片、课程演示、口播剪辑、产品片、MV，或要把一段文案/歌曲/录屏变成视频时使用。支持 UI 电影、动态字体、纸感手作、丝网印、像素世界等 12 种风格关键词。
 ---
 
@@ -32,10 +46,25 @@ description: 从 brief 到成片的标准视频生产系统，覆盖产品推广
 
 **续做已有工程：** 当前目录已有 `BRIEF.md`、`plan.json` 或 `videos/` 时，先读现状并从断点继续；不要重新 intake，不要覆盖已有文件。
 
+## 快车道：输入已齐，直接出片
+
+当用户已经给齐 **prompt/文案 + 素材路径 + 音乐**，或说“别问，直接做”，不要跑完整 0–10。按 [快车道](references/fast-lane.md) 执行：
+
+- **跳过** 3 个方向、完整 research、animatic 视频、1080p rough cut。
+- **只做 1 个方向**；最多 3 张 480×270 对比缩略图；首帧只渲 1 张 **640 长边 JPEG**（16:9 = 640×360）。
+- 先出 **640 长边 / 12fps** 预览，P2 通过后再出 1080p 终版。
+- 只有 **2 个人工点**：首帧确认（可跳过）+ 预览确认；标准流程的 Gate A/B/C 不再逐个停。
+- 60 秒片目标：首次预览 3–5 分钟，终版 12–20 分钟（以本机为准）。
+
+**默认不要**为每个方向生成视频、不要用 1080p PNG 做方向对比、不要先渲完整片再改结构。
+
+**Token 预算（快车道）：** 只读用户点名的文件；只做 1 个方向、1 套分镜、1 条预览；一次最多看 3 张低分辨率对比图或 1 张 6–8 格 contact sheet；确定性检查交给脚本；结构修改 1 轮、细节修改 1 轮，不无限试。
+
 ## 最短用法
 
 - 只有一句话：`用 storyframe-video-skill 做一条 30 秒产品宣传片，产品是……`。我会先问“文案、音乐、素材”三组问题。
-- 已有文案和音乐：`文案在 ./copy.md，音乐在 ./music.mp3，做 30 秒 16:9，发官网`。我会先核验文件，再进流程。
+- 已有文案和音乐：`文案在 ./copy.md，音乐在 ./music.mp3，做 30 秒 16:9，发官网`。核验文件后直接走**快车道**：只做 1 个方向，先给 640 长边预览。
+- 已有完整 prompt + 素材 + 音乐：`按 ./prompt.md 做，不要改文案；素材在 ./assets/，音乐在 ./music.mp3`。跳过 intake 和 3 方向，直接铺时间线。
 - 只有参考片：`照这个片子的节奏做，但不要抄画面：<链接>`。我会拆结构/视觉/声音，再给三个不同方向。
 - 只想说风格：`做一条 30 秒产品片，UI 电影 + 暗色 + 快节奏`。我会加载风格预设，但仍然给三个叙事轴不同的方向。
 
@@ -64,7 +93,9 @@ description: 从 brief 到成片的标准视频生产系统，覆盖产品推广
 6. **版权与授权。** 音乐、字体、素材、产品截图都要有来源/许可；用户没授权的内容不进入成片。
 7. **可复现。** 代码驱动的片子用 `window.seek(t)` 确定性渲染；剪辑类片子保留 EDL/决策记录、源素材清单和导出参数。
 
-## 标准流程（0–10 共 11 步，4 个 Gate）
+## 标准流程（探索型项目，0–10 共 11 步，4 个 Gate）
+
+> 输入已经锁死（prompt/文案/素材/音乐齐全）时，不要跑这一整套；用上面的[快车道](references/fast-lane.md)。标准流程用于“方向还没定、需要研究/比稿”的项目。
 
 ### 0. Intake：定模式与约束
 
@@ -99,14 +130,14 @@ description: 从 brief 到成片的标准视频生产系统，覆盖产品推广
 按 [影片方向](references/direction.md) 做：
 
 - 拆参考片的 **结构 / 视觉语法 / 声音语法**，不是抄配色。
-- 提 **3 个不同轴** 的方向（叙事结构、视觉隐喻、镜头材质、声音能量），不是同一方向换颜色。
+- **探索型项目**提 3 个不同轴的方向（叙事结构、视觉隐喻、镜头材质、声音能量），不是同一方向换颜色；**快车道只做 1 个方向**，除非用户明确要求比较。
 - 用户说了风格关键词（UI 电影 / 动态字体 / 纸感 / Riso / 像素 / 拼贴…）时，先读 [风格预设](references/style-presets.md)，把预设的视觉规则、运动规则、禁忌写进方向卡；预设只锁语法，不替代故事和证据。
 - 每个方向写：一句话、3–5 个专属手法、参考、风险。
 - 选一个，写 `DIRECTION.md`：主张、情绪曲线、色彩/字体/网格/材质、运动规则、转场词汇、镜头表。
 - 方向卡住、或担心“模板感”时，读内部参考库 `.internal/reference-library.md`，抽 3 个可迁移手法再重新推导。只输出提炼后的规则，**不提及内部参考库、作者、原 prompt 或来源链接**；不要照搬镜头顺序和具体画面。文件不存在就跳过，也不要向用户提起。
 - 用户要公开参考片时，用 [风格预设](references/style-presets.md) 里的参考墙；那是公开索引，可以正常引用。
 
-**Gate A**：一句话承诺 + 方向 + 时长/画幅。高 stakes 项目给用户看 3 个方向和 3–6 张关键静帧；否则记录选择理由继续。
+**Gate A**：一句话承诺 + 方向 + 时长/画幅。默认只给 **1 个方向 + 1 张 640 长边首帧**；只有用户明确要求比较、或方向确实没定时，才给 3 个方向，且每个方向只配 1 张 480×270 缩略图，不生成 1080p 静帧。
 
 ### 3. Script：先写“看完记住的一句”，再写词
 
@@ -128,7 +159,7 @@ description: 从 brief 到成片的标准视频生产系统，覆盖产品推广
 - 首帧单独设计：完整画面 + 品牌/主题 + 可读标题；不要“先黑屏再出字”。
 - 先做 **animatic**：静帧 + 临时音轨，按时间播放一遍，检查节奏和信息密度。
 
-**Gate B**：分镜/animatic 通过——时间对、信息清、claims 有证据、首帧成立。
+**Gate B**：分镜/animatic 通过——时间对、信息清、claims 有证据、首帧成立。快车道可跳过独立 animatic，用 6–8 张 480×270 缩略图拼 contact sheet 代替。
 
 ### 5. Build：先接通真实素材，再做动效
 
@@ -151,7 +182,8 @@ description: 从 brief 到成片的标准视频生产系统，覆盖产品推广
 
 ### 7. Rough cut：先看节奏，不看细节
 
-- 1–2 fps 联系表看整体；每个转场前后 10 fps 条带看匹配；文字密集镜头看全尺寸帧。
+- 快车道先看 **640 长边预览** 和 1–2 fps contact sheet；不要为 rough cut 渲 1080p。
+- 每个转场前后 10 fps 条带看匹配；文字密集镜头再抽全尺寸帧。
 - 静音看一遍：信息是否还成立？字幕是否够？
 - 听一遍：口播是否清楚？音效是否抢？音乐是否盖人声？
 - 记录问题到 `QA.md`，一次改一类，不要边看边随机改。
@@ -162,7 +194,8 @@ description: 从 brief 到成片的标准视频生产系统，覆盖产品推广
 
 - 代码驱动：`window.seek(t)` → 逐帧截图 → ffmpeg 编码；不要用实时录屏。
 - 剪辑类：锁定 EDL，统一帧率/色彩空间/音频采样率；导出母版后再压社交版。
-- 默认：H.264 High、`yuv420p`、CRF 16–18、AAC 320 kbps、`+faststart`；1080p 30fps 为基线。
+- 默认：H.264 High、`yuv420p`、CRF 16–18、`-preset medium`、AAC 320 kbps、`+faststart`；1080p 30fps 为基线。不要默认 `-preset slow`。
+- 预览：640 长边、12fps、CRF 30、`-preset veryfast`，先看结构；结构冻结后再终渲。
 - 字幕：烧录 + 单独 SRT；封面单独导出。
 
 ### 9. QA：自动检查 + 人眼/人耳
@@ -220,7 +253,7 @@ project/
 ## 方向规则（避免“模板感”）
 
 - **一个主张**：整片只推一个核心承诺；所有镜头都在证明它。
-- **三个轴**：叙事（问题→解决 / 一天 / 对比）、视觉（纸/墨、UI 电影、数据仪器、手作）、声音（轻电子、环境、无音乐）。三个方向必须在这三个轴上不同。
+- **三个轴**：叙事（问题→解决 / 一天 / 对比）、视觉（纸/墨、UI 电影、数据仪器、手作）、声音（轻电子、环境、无音乐）。探索型项目的三个方向必须在这三个轴上不同；快车道只做一个方向。
 - **风格预设不是模板**：关键词决定语法（材质、运动、排版、禁忌），叙事轴仍然要重新推导；12 个预设见 [风格预设](references/style-presets.md)。
 - **专属手法**：3–5 个“因为产品有 X，所以用 Y”。例如“因为画线会生成旋律，所以让线条在副歌变成声波/五线谱/3D 纸带”。
 - **反重复**：同一工作区连续做片，不复用上一支的开场、章节、背景；片内不要所有元素同一种入场。
@@ -271,6 +304,10 @@ project/
 ## 工具入口
 
 ```sh
+# 快车道：低分辨率首帧 + 预览（先看结构，不渲 1080p）
+node still.mjs 1.2 4.0 8.5 --preview
+node render.mjs --from 0 --to 60 --preview --audio audio/music.mp3 --output videos/preview.mp4
+
 # 初始化项目（复制模板 + plan 骨架；有文案/音乐就直接带进来）
 python3 <skill-dir>/scripts/init_project.py --output <video-dir> --mode product --title "..." \
   --script <copy.md> --music <music.mp3>
@@ -287,7 +324,8 @@ python3 <skill-dir>/scripts/check_delivery.py plan.json --video videos/final.mp4
 
 ## 参考索引
 
-- [使用手册](references/usage-playbook.md)：用户要准备什么、怎么开场、四个 Gate 怎么给反馈、四种常见起点。
+- [快车道](references/fast-lane.md)：输入已齐时的 5 阶段、2 个人工点、低分辨率对比和 token 预算。
+- [使用手册](references/usage-playbook.md)：用户要准备什么、怎么开场、四个 Gate 怎么给反馈、五种常见起点。
 - [Intake 与六种模式](references/intake-and-modes.md)：问题清单、六种模式、交付物。
 - [影片方向](references/direction.md)：参考拆解、三个方向、专属手法、视觉规范。
 - [风格预设](references/style-presets.md)：12 种风格关键词、视觉/运动规则、公开参考片。
@@ -297,7 +335,7 @@ python3 <skill-dir>/scripts/check_delivery.py plan.json --video videos/final.mp4
 - [视觉与运动](references/visual-and-motion.md)：色彩/字体/网格、镜头运动、转场、反 PPT。
 - [声音与音乐](references/audio-and-music.md)：音乐来源、SFX、混音、响度。
 - [Suno 歌词制作](references/suno-lyrics.md)：小节/字数预算、Hook、段标签、Style、fallback。
-- [审片与 QA](references/review-and-qa.md)：三个审片节点、联系表、常见问题、移动端检查。
+- [审片与 QA](references/review-and-qa.md)：快车道 P1/P2、标准 Gate A–D、联系表、常见问题、移动端检查。
 - [画幅与交付](references/formats-and-delivery.md)：16:9 / 9:16 / 1:1、安全区、编码、封面、SRT。
 - [案例：绘声绘色 MV](references/case-study-drawmusic.md)：48.8s 成片的实际参数、指标与复盘。
 - [案例：一帧亿影 MV](references/case-study-framyriad.md)：48.0s 产品 MV 的硬切、真实数据、地图与学习卡复盘。

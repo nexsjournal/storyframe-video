@@ -25,19 +25,44 @@ function arg(name, fallback) {
   return fallback;
 }
 const has = (name) => process.argv.includes(`--${name}`);
+const preview = has('preview') || has('draft');
 
 const from = Number(arg('from', 0));
 const to = Number(arg('to', PROJECT.duration));
-const fps = Number(arg('fps', PROJECT.fps));
-const width = Number(arg('width', PROJECT.width));
-const height = Number(arg('height', PROJECT.height));
-const crf = Number(arg('crf', 18));
-const output = arg('output', 'videos/test.mp4');
+const fps = Number(arg('fps', preview ? 12 : PROJECT.fps));
+let width = Number(arg('width', NaN));
+let height = Number(arg('height', NaN));
+if (preview) {
+  const longEdge = Number(arg('long-edge', 640));
+  const aspect = PROJECT.width / PROJECT.height;
+  if (Number.isFinite(width) && !Number.isFinite(height)) height = Math.round(width / aspect);
+  else if (!Number.isFinite(width) && Number.isFinite(height)) width = Math.round(height * aspect);
+  else if (!Number.isFinite(width) && !Number.isFinite(height)) {
+    if (PROJECT.width >= PROJECT.height) {
+      width = longEdge;
+      height = Math.round(longEdge / aspect);
+    } else {
+      height = longEdge;
+      width = Math.round(longEdge * aspect);
+    }
+  }
+} else {
+  width = Number.isFinite(width) ? width : PROJECT.width;
+  height = Number.isFinite(height) ? height : PROJECT.height;
+}
+const crf = Number(arg('crf', preview ? 30 : 18));
+const preset = arg('preset', preview ? 'veryfast' : 'medium');
+const quality = Number(arg('quality', preview ? 72 : 90));
+const settleFrames = Number(arg('settle-frames', preview ? 1 : 2));
+const output = arg('output', preview ? 'videos/preview.mp4' : 'videos/test.mp4');
 const audio = arg('audio', null);
 const keepFrames = has('keep-frames');
 
 if (!(to > from)) throw new Error('--to must be greater than --from');
 if (!(fps > 0)) throw new Error('--fps must be > 0');
+if (!(width > 0 && height > 0)) throw new Error('--width/--height must be > 0');
+if (!(quality >= 1 && quality <= 100)) throw new Error('--quality must be 1..100');
+if (!Number.isInteger(settleFrames) || settleFrames < 0) throw new Error('--settle-frames must be >= 0');
 
 const framesDir = path.resolve('frames');
 fs.rmSync(framesDir, { recursive: true, force: true });
@@ -59,11 +84,13 @@ const started = Date.now();
 for (let i = 0; i < total; i++) {
   const t = from + i / fps;
   await page.evaluate((time) => window.seek(time), t);
-  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+  for (let s = 0; s < settleFrames; s++) {
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(r)));
+  }
   await page.screenshot({
     path: path.join(framesDir, `f_${String(i).padStart(5, '0')}.jpg`),
     type: 'jpeg',
-    quality: 92,
+    quality,
   });
   if (i % 30 === 0 || i === total - 1) {
     console.log(`frame ${i + 1}/${total} t=${t.toFixed(2)} ${(Date.now() - started) / 1000}s`);
@@ -80,17 +107,20 @@ const args = [
 if (audio) args.push('-i', path.resolve(audio));
 args.push(
   '-c:v', 'libx264',
-  '-preset', 'slow',
+  '-preset', preset,
   '-crf', String(crf),
   '-pix_fmt', 'yuv420p',
   '-profile:v', 'high',
   '-tune', 'film',
 );
-if (audio) args.push('-c:a', 'aac', '-b:a', '320k', '-ar', '48000', '-ac', '2');
+if (audio) args.push('-c:a', 'aac', '-b:a', preview ? '192k' : '320k', '-ar', '48000', '-ac', '2');
 args.push('-map', '0:v:0');
 if (audio) args.push('-map', '1:a:0');
 args.push('-shortest', '-movflags', '+faststart', '-t', String(to - from), output);
 
+console.log(
+  `${preview ? 'preview' : 'final'} ${width}x${height} @ ${fps}fps crf=${crf} preset=${preset}`
+);
 console.log('ffmpeg', args.join(' '));
 const ff = spawnSync('ffmpeg', args, { stdio: 'inherit' });
 if (ff.status !== 0) throw new Error('ffmpeg failed');

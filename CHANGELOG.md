@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.3.0 — 2026-11-12
+
+- 新增 `references/fast-lane.md`：输入已齐（prompt/文案 + 素材 + 音乐）时的 5 阶段快车道，跳过 3 方向、完整 research、animatic 视频和 1080p rough cut
+- 快车道只做 1 个方向、1 张 640 长边首帧；对比图最多 3 张 480 宽/格，contact sheet 每格 320px，不再用 1080p PNG 做方向比较
+- 快车道先出 640×360 / 12fps 预览，P2 通过后再终渲；只有 P1 首帧（可跳过）+ P2 预览两个人工点
+- `starter/render.mjs` 增加 `--preview` / `--draft`：640 长边、12fps、CRF 30、`veryfast`、JPEG q72，默认输出 `videos/preview.mp4`
+- `starter/still.mjs` 增加 `--preview`：640 长边 JPEG q72，输出 `renders/preview/`；新增 `--width/--height/--quality/--format/--out-dir/--prefix`
+- 新增 `scripts/still_sheet.py`：把多张静帧拼成一张带标签的对比表，方向对比不逐张发图
+- 终渲默认 `-preset medium`（不再默认 `slow`），并减少每帧 settle 次数；新增 `--preset` / `--quality` / `--settle-frames`
+- `SKILL.md` / `direction.md` / `usage-playbook.md` / `review-and-qa.md` / `intake-and-modes.md` / README / 模板同步快车道；新增 token 预算与“两轮修改上限”
+- `SKILL.md` front matter 增加发布元数据：SkillHub 的 `slug` / `displayName` / `summary` / `license` / `homepage` / `tags`，以及 WorkBuddy 开放平台要求的 `display_name` / `display_name_en` / `category` / `description_zh` / `description_en` / `author`；Agent 侧的 `name` / `description` 保持不变
+- 新增 `tools/package_skill.py`：按白名单生成 `dist/` 目录与 zip，校验元数据、相对链接、本机路径泄露，并对齐 SkillHub 10MB 限制
+- README 新增“从技能市场安装”“发布（维护者）”两节
+- 新增 `docs/assets/icon-512.png`：SkillHub 技能图标（可自定义上传）
+- 版本号升至 1.3.0
+
 ## 1.2.0 — 2026-10-20
 
 - 新增 `references/style-presets.md`：12 种风格预设（UI 电影、动态字体、3D 产品、编辑排版、数据仪器、丝网印、纸感手作、手绘叙事、像素世界、拼贴、复古未来、流程讲解），含视觉/运动规则、禁忌、参考片与实现提示
