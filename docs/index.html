@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Storyframe — 把视频当成代码写</title>
+<meta name="description" content="给 AI Agent 用的视频生产系统：音乐先出、画面按拍布点、一次出片。任意 Agent、任意 harness、任意模型。" />
+<meta property="og:title" content="Storyframe — 把视频当成代码写" />
+<meta property="og:description" content="30 秒 1080p 片，渲染 10 秒。六种模式、24 种风格、确定性渲染、自动质检。" />
+<meta property="og:image" content="./assets/storyframe-promo-cover.jpg" />
+<meta property="og:video" content="./assets/storyframe-promo.mp4" />
+<style>
+  :root {
+    --paper: #f2ede1; --ink: #141219; --accent: #ff3b5c; --muted: rgba(242,237,225,.55);
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--ink); color: var(--paper);
+    font-family: "Helvetica Neue", "PingFang SC", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 40px 24px 72px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    font: 600 12px/1 var(--mono); letter-spacing: .18em; color: var(--muted); text-transform: uppercase; }
+  .mark { display: flex; align-items: center; gap: 10px; color: var(--paper); letter-spacing: .1em; }
+  .mark i { width: 22px; height: 22px; border-radius: 7px; background: var(--paper); display: grid; place-items: center; }
+  .mark i::after { content: ""; width: 11px; height: 11px; border-radius: 3px; background: var(--accent); }
+  .hero { margin: 64px 0 28px; }
+  .kicker { font: 600 12px/1 var(--mono); letter-spacing: .22em; color: var(--accent); text-transform: uppercase; }
+  h1 { margin: 18px 0 0; font-size: clamp(38px, 7vw, 84px); line-height: 1.02; letter-spacing: -.02em; font-weight: 800; }
+  h1 em { font-style: normal; color: var(--accent); }
+  .sub { margin: 20px 0 0; max-width: 44ch; font-size: clamp(15px, 2vw, 19px); line-height: 1.6; color: var(--muted); }
+  video { width: 100%; margin-top: 36px; border-radius: 14px; display: block; background: #000; }
+  .cap { margin: 10px 0 0; font: 500 12px/1.6 var(--mono); color: rgba(242,237,225,.4); letter-spacing: .04em; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 44px; }
+  .card { border: 1px solid rgba(242,237,225,.14); border-radius: 12px; padding: 18px 18px 20px; }
+  .card b { display: block; font: 600 11px/1 var(--mono); letter-spacing: .16em; color: var(--accent); text-transform: uppercase; }
+  .card span { display: block; margin-top: 12px; font-size: 26px; font-weight: 700; letter-spacing: -.01em; }
+  .card small { display: block; margin-top: 8px; font-size: 13px; line-height: 1.5; color: var(--muted); }
+  .cta { margin-top: 44px; border-top: 1px solid rgba(242,237,225,.14); padding-top: 28px;
+    display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  code { font: 600 14px/1 var(--mono); background: rgba(242,237,225,.07); border: 1px solid rgba(242,237,225,.16);
+    border-radius: 10px; padding: 14px 16px; }
+  code b { color: var(--accent); font-weight: 600; }
+  .btn { display: inline-block; text-decoration: none; font: 600 13px/1 var(--mono); letter-spacing: .1em;
+    text-transform: uppercase; padding: 15px 22px; border-radius: 10px; background: var(--paper); color: var(--ink); }
+  .btn.ghost { background: transparent; color: var(--paper); border: 1px solid rgba(242,237,225,.28); }
+  footer { margin-top: 56px; font: 500 12px/1.7 var(--mono); color: rgba(242,237,225,.35); letter-spacing: .04em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="mark"><i></i> Storyframe</span>
+    <span>Any agent · any model</span>
+  </header>
+
+  <section class="hero">
+    <p class="kicker">Motion system for agents</p>
+    <h1>视频不是剪出来的<br /><em>是写出来的</em></h1>
+    <p class="sub">给 AI Agent 用的视频生产系统：音乐先出、画面按拍布点、一条命令出片。六种模式、24 种风格、确定性渲染、自动质检。</p>
+
+    <video src="./assets/storyframe-promo.mp4" poster="./assets/storyframe-promo-cover.jpg"
+           controls playsinline preload="metadata" width="1120"></video>
+    <p class="cap">30 秒 · 1280×720 · 124 BPM 全程卡点 · 配乐由代码合成 · 这条片是这个 skill 自己做的（端到端 2 分 48 秒）</p>
+  </section>
+
+  <section class="grid">
+    <div class="card"><b>Per frame</b><span>9.2 ms</span><small>Canvas <code style="padding:0;background:none;border:0;color:inherit">draw(t)</code> 逐帧，不写磁盘、不等 rAF</small></div>
+    <div class="card"><b>Per clip</b><span>9.9 s</span><small>900 帧 1080p30 采集 + 编码</small></div>
+    <div class="card"><b>Styles</b><span>24 种</span><small>每种一套视觉规则 + 运动规则 + 禁忌</small></div>
+    <div class="card"><b>Modes</b><span>6 种</span><small>产品 / 讲解 / 口播 / 活动 / 课程 / MV</small></div>
+  </section>
+
+  <section class="cta">
+    <code><b>$</b> skillhub install storyframe-video</code>
+    <a class="btn" href="https://github.com/nexsjournal/storyframe-video">GitHub</a>
+    <a class="btn ghost" href="https://github.com/nexsjournal/storyframe-video/blob/main/SKILL.md">读 SKILL.md</a>
+  </section>
+
+  <footer>
+    任意 Agent（Claude Code / Codex / DSH / Cursor / Cline / Zed / 自建 loop）· 任意模型（强模型写场景，快模型填模板）· 任意渲染栈（内置 canvas，也可换 Remotion / manim / 录屏）<br />
+    MIT · 这个页面只是一张演示页，完整文档在仓库里。
+  </footer>
+</div>
+</body>
+</html>
