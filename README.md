@@ -210,7 +210,7 @@
   <a href="docs/assets/storyframe-promo.mp4"><img src="docs/assets/storyframe-promo-cover.jpg" width="100%" alt="Storyframe 30 秒宣传片：点开播放" /></a>
 </p>
 
-<p align="center"><sub><strong>▶ 点开播放</strong> · 30 秒 · 1920×1080 / 30fps · 124 BPM 全程卡点 · 配乐也是代码合成的<br />
+<p align="center"><sub><strong>▶ 点开播放</strong> · 30 秒 · 1280×720 / 30fps · 124 BPM 全程卡点 · 配乐也是代码合成的<br />
 这条片子是用这个 skill 自己做的：端到端 <strong>2 分 48 秒</strong>，其中渲染（900 帧 1080p）<strong>46 秒</strong>、单帧 9.6 ms。</sub></p>
 
 ---
@@ -685,7 +685,7 @@ python3 scripts/lyric_budget.py lyrics.md --bpm 124 --bars 27 \
 
 <p align="center"><sub>1920×1080 · 30fps · H.264 · 30.0s · −15.1 LUFS · 900 帧渲染 9.9 秒 · Canvas `draw(t)` + ffmpeg</sub></p>
 
-<p align="center"><strong><a href="docs/assets/storyframe-promo.mp4">▶ 播放这条 30 秒成片（1080p，1.2 MB）</a></strong></p>
+<p align="center"><strong><a href="docs/assets/storyframe-promo.mp4">▶ 播放这条 30 秒成片（720p，0.86 MB）</a></strong></p>
 
 ### 两个真实案例复盘
 
