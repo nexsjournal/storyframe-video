@@ -8,7 +8,7 @@
 
 1. **用户提供**：确认授权/来源；问清是否可商用、是否要署名。
 2. **已授权库/生成**：Artlist/Epidemic/Suno 等；保留 license/生成记录。
-3. **代码合成**：没有合适素材时，用 Python/Web Audio 合成；可完全控 BPM/结构，但音色要设计。
+3. **代码合成（默认）**：`scripts/make_music.py` 直接出 WAV + 节拍网格；六种预设，BPM/段落/侧链可控，无版权问题，3 秒出 60 秒曲子。宣传片类默认走这条。
 4. **不要**：来路不明的商业曲、短视频热门音频（除非平台授权明确）。
 
 音乐必须能支撑结构：intro/hook/build/chorus/bridge/outro；不要一首 loop 从头铺到尾。
@@ -28,6 +28,57 @@ ffprobe -v error -select_streams a:0 \
 - 目标时长和音乐时长不一致时：先问“裁音乐/循环/改片长”，不要默默截断。
 - 没有 BPM 就测/听/用节拍器对；卡点前先确认第一拍位置。
 - 授权不明时只做内部版，不交付商用版。
+
+### 1.2 代码合成配乐（默认路径）
+
+没有合适的授权音乐时，**不要去找素材、不要跑 Suno 歌词单**，直接用配乐生成器：它同时产出音频和节拍网格，画面立刻有卡点可依。
+
+```sh
+python3 scripts/make_music.py --preset uplift --bpm 124 --duration 30 \
+  --out audio/music.wav --grid audio/beats.json
+```
+
+| 预设 | BPM | 性格 | 适合 |
+|---|---:|---|---|
+| `uplift` | 124 | 四拍底鼓、明亮 pluck、暖 pad，中高能量 | 产品发布、企业宣传 |
+| `pulse` | 122 | 半拍贝斯、短 kick、密 hat，冷而克制 | 科技、SaaS、数据 |
+| `cinematic` | 96 | 低频 drone、慢 pad、战鼓，留白大 | 品牌片、预告、开场 |
+| `edm` | 128 | 全鼓组、offbeat bass、大 drop | 活动、快闪、展会 |
+| `warm` | 98 | swing、黑胶噪声、七和弦 | 生活方式、轻叙事 |
+| `ambient` | 84 | 几乎无鼓，长和弦 | 口播铺底、课程 |
+
+合成器里做了什么（改参数时的抓手）：
+
+- **鼓组**：kick 是正弦扫频 + 噪声 click；snare/clap 是带通噪声；hat 是高通噪声。鼓型按 16 步网格写，`energy` 控制弱拍密度。
+- **低频**：saw + sub，包络随音长衰减；`offbeat` 型落在反拍，推进感更强。
+- **和声**：4 个失谐 saw 叠成 pad，`sustain` / `swell` / `stab` 三种包络。
+- **侧链**：每次 kick 触发一次下压（`duck` 0.42–0.65），这是"有呼吸感、能卡点"的关键。
+- **母带**：高通 28 Hz → 软压缩 → 限幅 → 归一化到 `--lufs`（默认 −14）。头 20 ms / 尾 350 ms 淡入淡出。
+- **确定性**：`--seed` 固定，同参数每次出同一条音频。
+
+**结构自动生成**：按 BPM 把时长换算成小节数，再分配 `intro / build / main / break / main / outro`；`intro` 只有 pad+pad 层，`build` 加 hat 与 riser，`main` 全开，`break` 抽掉鼓，`outro` 收层。这就是"有起伏"而不是一条 loop 铺到底。
+
+**卡点怎么用**：
+
+```python
+grid.beat(8)          # 第 8 拍的时间（秒）
+grid.bar(3)           # 第 3 小节起点
+grid.snap(2.13, 2)    # 把 2.13s 吸到最近的八分音符
+hit(t, grid.beat(8))  # 打点包络：那一下之后的衰减值
+grid.sectionAt(t)     # 当前段落与能量，用来决定镜头强度
+```
+
+- 硬切、大字入场、冲击音效 → 全部落在 `beats` / `accents` 上。
+- 画面强度跟 `sections[].energy` 走：`intro` 只做位移，`main` 才做切镜和满屏。
+- 切点用硬切，不要交叉淡化：淡化会制造黑帧、也会糊掉拍点。
+
+**校验**：
+
+```sh
+python3 scripts/snap_plan.py plan.json --beats audio/beats.json --check --tolerance 0.03
+```
+
+---
 
 ## 2. 结构
 

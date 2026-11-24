@@ -1,6 +1,6 @@
 # 风格预设：关键词 → 视觉语法
 
-这不是 12 套模板，而是 12 种 **视觉语法**。用户说一个关键词，先锁定“画面怎么组织、怎么动、什么不该出现”，再回到产品/主题推导方向。
+这不是模板库，而是 **24 种视觉语法**。用户说一个关键词，先锁定“画面怎么组织、怎么动、什么不该出现”，再回到产品/主题推导方向。
 
 ## 怎么用
 
@@ -30,6 +30,18 @@
 | 10 | `拼贴` `collage` `混合媒介` | Collage | 剪贴、胶带、错位 | mv / event / explainer |
 | 11 | `复古未来` `CRT` `Y2K` | Retro Future | 扫描线、铬字、终端 | event / mv / product |
 | 12 | `流程` `步骤` `recipe` | Process Explainer | 一个流程从空到满 | explainer / course / product |
+| 13 | `流体` `着色器` `噪声` `GLSL` | Shader Field | 全屏流体/噪声场，颜色随声音推 | event / mv / product |
+| 14 | `粒子` `星尘` `群集` | Particle Swarm | 几千个点聚散成形状 | event / mv / explainer |
+| 15 | `3D场景` `低多边形` `世界` | Three World | 一个有纵深的世界，相机穿行 | product / mv / event |
+| 16 | `终端` `命令行` `HUD` `数据流` | Terminal HUD | 屏幕在打字、在跑数据 | product / explainer / course |
+| 17 | `铬` `液态金属` `镭射` | Liquid Chrome | 反光金属字与物体 | event / mv / product |
+| 18 | `蓝图` `线框` `工程图` | Blueprint | 白线在深底上把结构画出来 | product / explainer / course |
+| 19 | `太空` `轨道` `星球` | Orbital Space | 天体尺度，慢推镜 | event / mv / explainer |
+| 20 | `地图` `航线` `地域` | Map Story | 地图上一条线讲完故事 | product / event / explainer |
+| 21 | `霓虹` `合成波` `赛博` | Neon Retro | 紫粉光、扫描线、远景网格 | event / mv |
+| 22 | `故障` `腐蚀` `损坏` | Glitch Corrupt | 画面被信号撕开 | event / mv / product |
+| 23 | `音频可视化` `跟着音乐跳` | Audio-Reactive | 每个元素由频谱/拍点驱动 | mv / event / product |
+| 24 | `白场` `极简` `大字排版` | White Minimal | 白底黑字，靠排版和留白 | product / explainer / event |
 
 ---
 
@@ -393,3 +405,288 @@
 ## 参考与授权
 
 本文件的参考片链接指向公开作品页或作者页。缩略图、视频版权归各创作者；本仓库只做索引和链接，不复制视频文件。商用前请按原作品/素材的许可逐项确认。
+
+---
+
+## 13. 流体着色器 / Shader Field
+
+**触发词：** `流体` `着色器` `噪声` `GLSL` `液态背景` `shader`
+
+**视觉规则**
+- 全屏一个场：fbm 噪声 / 域扭曲 / 金属反射，颜色 2–3 个，不要彩虹。
+- 文字压在场上时加一层暗角或半透明黑，保证可读。
+- 场的运动要慢于文字：背景 0.2× 速度，文字 1×。
+
+**运动规则**
+- 能量来自拍点：每次 kick 推一次域扭曲强度或亮度（`hit(t, beat)`）。
+- 段落切换时换频率/颜色，不要换整张图。
+
+**适合：** event / mv / product **不要：** 全场都在高速抖动；彩虹渐变当主视觉。  
+**实现：** Canvas2D 用低分辨率离屏画场再放大（320×180 起步），或者 WebGL 一个 fragment shader；**不要**用 CSS `filter: blur()` 做流体，光栅成本高一个数量级。
+
+**参考**
+- [monokern — GLSL/WebGL 场景](https://skillry.dev/ai-videos/opus-5-5/monokern-832979)
+- [prasenx — GLSL + Web Audio](https://skillry.dev/ai-videos/opus-5-5/prasenx-693512)
+- [axtonliu — GLSL/WebGL](https://skillry.dev/ai-videos/opus-5-5/axtonliu-290566)
+
+---
+
+## 14. 粒子群 / Particle Swarm
+
+**触发词：** `粒子` `星尘` `群集` `点云` `particles`
+
+**视觉规则**
+- 一个粒子系统只讲一件事：聚成 logo、散成尘埃、沿着一条路径流动。
+- 粒子数量跟分辨率走：1080p 3k–8k 个，超过就开始吃单帧成本。
+- 深底 + 单色粒子，或浅底 + 深色粒子；不要多色随机。
+
+**运动规则**
+- 聚散由拍点触发：`hit(t, beat)` 控制引力/斥力，形成"一到拍就炸开"。
+- 相机推近时粒子变稀疏（透视），不要只放大画布。
+
+**适合：** event / mv / explainer **不要：** 无目的漂浮；粒子当作"高级感"填充。  
+**实现：** 预计算每个粒子的目标位置（确定性伪随机，`seed + index`），每帧按 `t` 插值；不要用物理积分。
+
+**参考**
+- [ishuagra02 — Three.js + 粒子](https://skillry.dev/ai-videos/opus-5-5/ishuagra02-678129)
+- [ajith-io — Canvas 粒子](https://skillry.dev/ai-videos/opus-5-5/ajith-io-615243)
+- [nolkeeg — Canvas 粒子](https://skillry.dev/ai-videos/opus-5-5/nolkeeg-635633)
+
+---
+
+## 15. 三维世界 / Three World
+
+**触发词：** `3D场景` `低多边形` `世界` `穿行` `three.js`
+
+**视觉规则**
+- 一个可居住的空间：房间、城市、山谷、机房；有前中后景。
+- 材质只留 2 种（比如哑光 + 金属），光源 1 主 1 补。
+- 产品/主题作为场景里的实物出现，不是贴图。
+
+**运动规则**
+- 相机是唯一运动主体：推进、绕行、俯冲；一次镜头只做一个动作。
+- 段落切换用相机位置跳变（match cut），不要淡出。
+
+**适合：** product / mv / event **不要：** 无意义的旋转展示台；低模强行上 PBR 细节。  
+**实现：** Three.js + `seek(t)` 直接设相机/对象变换；渲染前 `renderer.render()` 一次。DOM 场景做不出纵深时优先换这个。
+
+**参考**
+- [youwareai — 云上城堡](https://skillry.dev/ai-videos/opus-5-5/youwareai-300653)
+- [mdaman010 — 中土世界](https://skillry.dev/ai-videos/opus-5-5/mdaman010-207866)
+- [shunshu32385143 — 天坛 3D](https://skillry.dev/ai-videos/opus-5-5/shunshu32385143-944719)
+
+---
+
+## 16. 终端 HUD / Terminal HUD
+
+**触发词：** `终端` `命令行` `HUD` `数据流` `打字`
+
+**视觉规则**
+- 等宽字体、单色（绿/琥珀/白），像一个真实运行中的系统。
+- 每屏只出现 3–6 行有意义的内容：命令、返回值、状态。
+- 网格、坐标、时间戳做装饰，但必须真实变化。
+
+**运动规则**
+- 打字速度按拍：每个词落在八分音符上。
+- 光标常闪（`t` 的模运算），但不要全屏闪烁。
+- 数据滚动用位移，不要每帧重排文本（成本高且会抖）。
+
+**适合：** product / explainer / course **不要：** 假命令拼贴；满屏绿色当"黑客感"。  
+**实现：** Canvas2D `fillText` + 等宽字体；预先算好每行的出现时间。
+
+**参考**
+- [0xkarmi — 确定性逐帧渲染](https://skillry.dev/ai-videos/opus-5-5/0xkarmi-129839)
+- [buildfastwithai — fframes 音频反应](https://skillry.dev/ai-videos/opus-5-5/buildfastwithai-844291)
+
+---
+
+## 17. 液态铬 / Liquid Chrome
+
+**触发词：** `铬` `液态金属` `镭射` `镜面` `chrome`
+
+**视觉规则**
+- 字或物体是镜面金属，环境反射给它颜色（暖或冷，二选一）。
+- 背景压暗，只让金属亮；加一条锐利高光边。
+- 最多 6 个字，或一个 logo 形体。
+
+**运动规则**
+- 表面流动：用一条移动的高光带扫过，不要整块变形。
+- 入场从"液滴"合并成字形；出场反向。
+
+**适合：** event / mv / product **不要：** 彩虹镭射糊满全屏；金属字配花背景。  
+**实现：** Canvas 里用线性渐变 + 遮罩模拟高光；真反射用 WebGL 环境贴图。避免大面积 `blur`。
+
+**参考**
+- [juancarlos17626 — 3D logo intro](https://skillry.dev/ai-videos/opus-5-5/juancarlos17626-429530)
+- [juancarlos17626 — WebGL 熔岩灯](https://skillry.dev/ai-videos/opus-5-5/juancarlos17626-382690)
+
+---
+
+## 18. 蓝图线框 / Blueprint
+
+**触发词：** `蓝图` `线框` `工程图` `schematic` `CAD`
+
+**视觉规则**
+- 深底（或蓝图蓝）+ 单色细线；标注、尺寸线、编号是画面的一部分。
+- 结构从无到有被"画"出来：先轮廓，再细节，最后标注。
+- 线宽 1–2px，不要发光描边。
+
+**运动规则**
+- 线条按拍生长（`--p` 进度绑拍点），标注在线条到位后才出现。
+- 整体可缓慢旋转/平移，制造"正在看图纸"的感觉。
+
+**适合：** product / explainer / course **不要：** 线框当装饰贴在实拍上；线条无意义抖动。  
+**实现：** Canvas2D 纯 stroke，成本极低；路径点预计算。
+
+**参考**
+- [bthreeagency — Canvas/SVG/CSS](https://skillry.dev/ai-videos/opus-5-5/bthreeagency-827092)
+- [aichrislee — 土星五号交互 3D](https://skillry.dev/ai-videos/opus-5-5/aichrislee-938609)
+
+---
+
+## 19. 轨道太空 / Orbital Space
+
+**触发词：** `太空` `轨道` `星球` `宇宙` `卫星`
+
+**视觉规则**
+- 尺度感：一颗星体占 1/3 画面，其余是空。
+- 光只有一个方向；星体边缘有细亮弧。
+- 文字小、克制，像仪表读数。
+
+**运动规则**
+- 慢推镜 + 缓慢自转；一次镜头只做一个方向。
+- 段落切换用"掠过"：一个物体从前景划过遮住画面。
+
+**适合：** event / mv / explainer **不要：** 星云粒子乱飞；紫蓝渐变糊满。  
+**实现：** Canvas 径向渐变球体 + 轨道椭圆；或用 Three.js 球体 + 简单光照。
+
+**参考**
+- [pagustafsson — 喀拉喀托 WebGL](https://skillry.dev/ai-videos/opus-5-5/pagustafsson-566609)
+- [mdaman010 — 3D 世界](https://skillry.dev/ai-videos/opus-5-5/mdaman010-207866)
+
+---
+
+## 20. 地图叙事 / Map Story
+
+**触发词：** `地图` `航线` `地域` `城市` `扩张`
+
+**视觉规则**
+- 一张真实地图（矢量或瓦片），不要手绘假地图。
+- 一条线讲完故事：起点 → 节点 → 终点；节点用点 + 标签。
+- 颜色只用一个强调色标"已经到达的地方"。
+
+**运动规则**
+- 线按拍生长，节点在拍点上点亮并弹一下。
+- 相机跟着线走（平移 + 缩放），不要整图缩放。
+
+**适合：** product / event / explainer **不要：** 世界地图配随机飞线；地理关系错误。  
+**实现：** 预渲染地图为静态图（一次），运动只做遮罩/位移/缩放；不要每帧重绘地图路径。
+
+**参考**
+- [heyiammallik — 作品集 3D 世界](https://skillry.dev/ai-videos/opus-5-5/heyiammallik-293397)
+- [screeendev — SaaS 发布](https://skillry.dev/ai-videos/opus-5-5/screeendev-981790)
+
+---
+
+## 21. 霓虹复古 / Neon Retro
+
+**触发词：** `霓虹` `合成波` `赛博` `80s` `synthwave`
+
+**视觉规则**
+- 紫/粉/青三色上限；地平线网格、远景剪影。
+- 字带辉光，但辉光半径 ≤ 字号的 15%。
+- 加扫描线/噪点，密度低（不要盖住内容）。
+
+**运动规则**
+- 网格向前流动，速度跟 BPM；字做色差位移。
+- 段落切换用"太阳下落"式的大位移。
+
+**适合：** event / mv **不要：** 三个以上霓虹色；辉光糊满屏。  
+**实现：** 辉光用两层绘制（模糊层用低分辨率离屏画一次），**不要**每帧 `shadowBlur`——它是最贵的 Canvas 操作之一。
+
+**参考**
+- [adrianduta96 — 音乐机器动效](https://skillry.dev/ai-videos/opus-5-5/adrianduta96-992248)
+- [howdevelop — Canvas](https://skillry.dev/ai-videos/opus-5-5/howdevelop-733090)
+
+---
+
+## 22. 故障腐蚀 / Glitch Corrupt
+
+**触发词：** `故障` `腐蚀` `损坏` `datamosh` `glitch`
+
+**视觉规则**
+- 故障是"事件"，不是常态：只在拍点/转场瞬间出现 2–4 帧。
+- 撕裂方向单一（横向条带），配 RGB 分离。
+- 正常画面要干净，故障才有对比。
+
+**运动规则**
+- 每次 kick 触发一次 60–120 ms 的位移/色偏，随后立刻恢复。
+- 不要连续抖动超过半拍。
+
+**适合：** event / mv / product **不要：** 全片故障（观感廉价且编码码率暴涨）。  
+**实现：** Canvas 切片重绘（把画布分段 `drawImage` 偏移），成本可控；不要逐像素处理。
+
+**参考**
+- [miaai-lab — GLSL 场景](https://skillry.dev/ai-videos/opus-5-5/miaai-lab-774895)
+- [brainextends — GLSL/SVG](https://skillry.dev/ai-videos/opus-5-5/brainextends-606193)
+
+---
+
+## 23. 音频反应 / Audio-Reactive
+
+**触发词：** `音频可视化` `跟着音乐跳` `频谱` `audio reactive`
+
+**视觉规则**
+- 一个主视觉 + 一层反应：环形频谱、声波带、亮度呼吸。
+- 反应要"可归因"：观众能看出是低音还是高音在推动。
+- 颜色随段落变（intro 冷、main 暖）。
+
+**运动规则**
+- 低频 → 尺寸/位移；中频 → 颜色；高频 → 细节/闪烁密度。
+- 每拍一个主脉冲，其余元素按 1/2、1/4 拍错开。
+
+**适合：** mv / event / product **不要：** 频谱柱铺满全屏当唯一画面。  
+**实现：** 项目里不要真的做 FFT——用 `beats.json` 的拍点 + 段落能量已经够；真要频谱就离线分析一次，存成数组按 `t` 取值。
+
+**参考**
+- [gandamu — demoscene + S3M 音轨](https://skillry.dev/ai-videos/opus-5-5/gandamu-ml-220530)
+- [prasenx — GLSL + Web Audio](https://skillry.dev/ai-videos/opus-5-5/prasenx-693512)
+- [buildfastwithai — 音频反应环](https://skillry.dev/ai-videos/opus-5-5/buildfastwithai-844291)
+
+---
+
+## 24. 白场极简 / White Minimal
+
+**触发词：** `白场` `极简` `大字排版` `留白` `Swiss`
+
+**视觉规则**
+- 白/近白底 + 黑字 + 一个强调色；没有阴影、没有渐变、没有圆角卡片堆叠。
+- 靠字号对比（96 / 32 / 14）和留白做层次；版心边距 ≥ 画宽 6%。
+- 一张画面只放一个观点，最多加一行注脚。
+
+**运动规则**
+- 位移 + 遮罩，不用缩放弹跳；入场用 0.3–0.5s 的 `easeOut`。
+- 行与行、字与字错开 1/16 拍入场。
+- 切点用硬切，字号在切点变化最大（大字→小字）。
+
+**适合：** product / explainer / event **不要：** 白场里塞图标网格；用细线框假装高级。  
+**实现：** Canvas 纯文字绘制，单帧成本最低（< 6 ms），是"要快"时的首选。
+
+**参考**
+- [flxrnc — UI 动效 loop](https://skillry.dev/ai-videos/opus-5-5/flxrnc-251921)
+- [khlaseek-dsgner — 组件动效](https://skillry.dev/ai-videos/opus-5-5/khlaseek-dsgner-877659)
+- [airobertdaily — Apple 演进动效](https://skillry.dev/ai-videos/opus-5-5/airobertdaily-416945)
+
+---
+
+## 附录：按"渲染成本"挑风格
+
+单帧成本决定一条片子要渲多久（1080p，实测）：
+
+| 档位 | 预设 | 单帧成本 | 说明 |
+|---|---|---:|---|
+| 极低 | White Minimal、Kinetic Type、Editorial、Blueprint | 6–10 ms | 纯填充与文字 |
+| 低 | UI Cinema、Data Instrument、Process Explainer、Riso、Pixel、Collage | 10–16 ms | 图形 + 少量图片 |
+| 中 | Shader Field（低分辨率离屏）、Particle Swarm、Glitch、Neon（离屏辉光） | 15–30 ms | 需要离屏画布 |
+| 高 | Three World、Liquid Chrome（真反射）、Paper Craft（多层投影） | 30–80 ms | 建议只在关键镜头用 |
+| 避免 | 大面积 `backdrop-filter`、每帧 `shadowBlur`、1080p 逐像素处理 | 80 ms+ | 直接换实现方式 |

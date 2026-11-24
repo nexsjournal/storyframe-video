@@ -4,11 +4,12 @@
   <p><strong>把视频当成一个工程，而不是会动的 PPT。</strong><br />
   故事 · 证据 · 时间 · 声音 · 验收</p>
   <p>
-    <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.3.0-F2416B?style=flat-square" alt="Version 1.3.0" /></a>
+    <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.4.1-F2416B?style=flat-square" alt="Version 1.4.1" /></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-17141A?style=flat-square" alt="MIT License" /></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.10+" />
     <img src="https://img.shields.io/badge/node-20%2B-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node 20+" />
     <img src="https://img.shields.io/badge/ffmpeg-required-007808?style=flat-square&logo=ffmpeg&logoColor=white" alt="ffmpeg" />
+    <img src="https://img.shields.io/badge/any%20agent-any%20model-17141A?style=flat-square" alt="Any agent, any model" />
     <a href="https://github.com/nexsjournal/storyframe-video/actions/workflows/check.yml"><img src="https://github.com/nexsjournal/storyframe-video/actions/workflows/check.yml/badge.svg" alt="CI" /></a>
   </p>
   <p>
@@ -24,7 +25,7 @@
 
 ---
 
-**Storyframe** 是一个面向 AI Agent 的视频生产 Skill。它不负责“生成一段会动的画面”，而是把一支片子拆成可以被执行、被检查、被复现的工程：
+**Storyframe** 是一个面向 AI Agent 的视频生产 Skill —— **不绑定模型，不绑定 harness，不绑定渲染器**。它不负责“生成一段会动的画面”，而是把一支片子拆成可以被执行、被检查、被复现的工程：
 
 - **故事**：观众看完记住哪一句话？
 - **证据**：每个产品功能、数据、日期、场地，来源在哪？
@@ -34,6 +35,10 @@
 
 默认交付不是“几个创意”，而是 **MP4 + 封面 + SRT + 可复现工程 + 验收报告**。
 
+> **速度**：12 秒 1080p30 全片（含配乐合成、预览、终版、每拍 QA 缩略图）实测 **8 秒**；60 秒片 **约 25 秒**。渲染层用 Canvas `draw(t)` + 硬切卡点 + ffmpeg 管道，单帧 9 ms。
+>
+> **适用面**：任意 Agent（Claude Code / Codex / DSH / Cursor / Cline / Zed / 自建 loop）、任意模型（强模型从零写场景，快模型填模板）、任意渲染栈（内置 canvas 参考实现，也可以换成 Remotion / manim / 录屏）。详见 [适用于任何 Agent 和模型](#适用于任何-agent-和模型)。
+>
 > 适用于：产品推广、功能发布、知识讲解、口播优化、活动宣传、课程演示、音乐 MV。
 > 默认画幅：16:9 / 9:16 / 1:1 / 4:5；常见时长 15–180 秒（MV 跟随歌曲长度）。
 
@@ -44,6 +49,7 @@
 ## 目录
 
 - [参考片墙](#参考片墙)
+- [适用于任何 Agent 和模型](#适用于任何-agent-和模型)
 - [怎么用：两种开始方式](#怎么用两种开始方式)
 - [风格库](#风格库)
 - [为什么是 Storyframe](#为什么是-storyframe)
@@ -166,6 +172,43 @@
 </tr>
 </table>
 
+## 适用于任何 Agent 和模型
+
+这个 skill 最初是为了让**跑得快、上下文紧的小模型**也能做出「代码动画」级别的片子，所以它把"判断"从模型脑子里搬到了文件里：
+
+| 它依赖什么 | 怎么保证换模型还能用 |
+|---|---|
+| 决策 | 落成 `BRIEF.md` / `DIRECTION.md` / `plan.json` / `QA.md`，下一个模型直接读，不用重新猜 |
+| 时间 | 落成 `audio/beats.json` 的拍点，不靠"感觉"对齐 |
+| 检查 | 落成脚本（`check_delivery.py` / `snap_plan.py` / `loudness.py`），不靠模型自觉 |
+| 画面 | 落成 `src/scene.js` 的一个 `draw(t)` 函数，改内容不改架构 |
+
+### 三档用法：环境不同，路径不同
+
+| 你的环境 | 怎么用 | 结果 |
+|---|---|---|
+| **强模型 + 能跑命令的 harness** | 从零写 `src/scene.js`，自由设计画面 | 30 秒片端到端 ≤3 分钟（实测 2 分 48 秒） |
+| **快模型 / 小模型**（flash 类、本地 7B–30B） | 不从零写场景：改模板三处（`src/config.js` 文案、`src/scene.js` 数据数组、`src/stage.js` 的 `PALETTE`），用现成组件拼 | 同一条流水线，少一轮返工 |
+| **只有工具调用、不能跑 shell** | 用现成素材 + 音乐走剪辑/合成路径，`plan.json` 当时间线，人工核对 | 交付仍完整，只是没有代码动画 |
+
+### 兼容性
+
+- **Agent / harness**：任何读取 `SKILL.md` 的 agent 都能用（Claude Code、Codex、DSH、Cursor、Cline、Zed、自建 agent loop）。不调用厂商 SDK，不需要 MCP，不需要特定 IDE。
+- **模型**：任意。强弱模型的差别只体现在"写多少代码"，不体现在"能不能出片"。
+- **渲染器**：`starter/` 里的 Playwright + ffmpeg 是**参考实现**，只要求两条——同一 `t` 渲染同一帧、切点落在拍上。Remotion、manim、Three.js、DOM + 录屏、剪映/PR 时间线都能接。
+- **降级**：缺 python / node / ffmpeg / Chrome 时的替代路径写在 [SKILL.md 的「依赖与降级」](SKILL.md) 里。
+
+### 它自己就是证据
+
+<p align="center">
+  <a href="docs/assets/storyframe-promo.mp4"><img src="docs/assets/storyframe-promo-cover.jpg" width="100%" alt="Storyframe 30 秒宣传片：点开播放" /></a>
+</p>
+
+<p align="center"><sub><strong>▶ 点开播放</strong> · 30 秒 · 1920×1080 / 30fps · 124 BPM 全程卡点 · 配乐也是代码合成的<br />
+这条片子是用这个 skill 自己做的：端到端 <strong>2 分 48 秒</strong>，其中渲染（900 帧 1080p）<strong>46 秒</strong>、单帧 9.6 ms。</sub></p>
+
+---
+
 ## 怎么用：两种开始方式
 
 你不需要先学会写分镜。选一种开始就行。
@@ -273,7 +316,7 @@ Agent 会先问三组问题，而不是一次抛 7 个：
 
 ### 更多参考
 
-参考片墙只选了 12 种语法各 1 支主片。想看同风格的其他片子，按作者名或作品名在公开平台继续找；只借结构/语法，不复制画面。
+参考片墙只选了每种语法各 1 支主片。想看同风格的其他片子，按作者名或作品名在公开平台继续找；只借结构/语法，不复制画面。
 
 > 参考片链接指向公开作品页或作者页。缩略图、视频版权归各创作者；本仓库只做索引，不复制视频文件。商用前按原作品/素材许可逐项确认。
 
@@ -306,7 +349,7 @@ Agent 会先问三组问题，而不是一次抛 7 个：
 | `QA.md` | 自动检查 + 人眼/人耳检查 + 残留风险 |
 | `README.md` | 复现命令、素材来源、导出参数 |
 
-> 不知道自己要什么风格？直接说关键词：`UI电影` `纸感` `动态字体` `像素` `Riso`… 12 种预设见 [风格库](#风格库)。
+> 不知道自己要什么风格？直接说关键词：`UI电影` `纸感` `动态字体` `像素` `Riso` `流体着色器` `音频反应`… 24 种预设见 [风格库](#风格库)。
 
 ### 它不会做什么
 
@@ -416,7 +459,21 @@ git clone git@github.com:nexsjournal/storyframe-video.git \
 ln -s /path/to/storyframe-video ~/.agents/skills/storyframe-video-skill
 ```
 
-> 目录名建议用 `storyframe-video-skill`，与 `SKILL.md` 的 `name` 一致。不同 Agent 的技能目录不同，只要是“包含 `SKILL.md` 的文件夹”即可。
+**Cursor / Cline / Zed / 其他 IDE 内 agent：**
+
+```sh
+git clone git@github.com:nexsjournal/storyframe-video.git \
+  ~/.agents/skills/storyframe-video-skill
+
+# 在项目里给 agent 加一条规则，指明技能位置
+echo '视频任务先读 ~/.agents/skills/storyframe-video-skill/SKILL.md' >> .cursor/rules/storyframe.mdc
+```
+
+**不能装技能目录的 harness（网页版、API 直连、自建 loop）：**
+
+把 `SKILL.md` 作为系统提示或首条消息注入，`references/` 与 `scripts/` 放在它可读的目录里即可。它只要求"能读文件、能跑命令"，不要求任何插件机制。
+
+> 目录名建议用 `storyframe-video-skill`，与 `SKILL.md` 的 `name` 一致。不同 Agent 的技能目录不同，只要是“包含 `SKILL.md` 的文件夹”即可。想确认装没装对：让 agent 说一句"读你的 SKILL.md，告诉我默认流水线六步"，能答出来就是通了。
 
 ### 2. 从技能市场安装
 
@@ -448,48 +505,40 @@ python3 scripts/init_project.py \
 
 没有文案或音乐时，删掉对应的 `--script` / `--music` 即可。`init_project.py` 会生成模板、目录、`plan.json` 骨架，以及 `SOURCES.json`（记录用户素材的来源与复制位置）。
 
-### 4. 先预览，再终渲
+### 4. 一条命令出片
 
 ```sh
 cd ~/Videos/my-film
 cp -R <skill-dir>/starter/* .
 npm install
 
-# 640×360、12fps、veryfast；只看结构
-node render.mjs --from 0 --to 30 --preview   --audio audio/music.mp3 --output videos/preview.mp4
+# ① 合成配乐 + 节拍网格（六种预设，3 秒出 60 秒曲子）
+python3 <skill-dir>/scripts/make_music.py --preset uplift --duration 30 \
+  --out audio/music.wav --grid audio/beats.json
 
-# 结构确认后，再出 1080p 终版
-node render.mjs --from 0 --to 30   --audio audio/music.mp3 --output videos/final.mp4
+# ② 预览 + 终版 + 每拍 QA 缩略图，一条命令跑完
+node make.mjs --duration 30 --final
+
+# 用用户自己的歌：跳过合成，直接用它的时长当时间源
+node make.mjs --duration 45 --audio ./music.mp3 --skip-music --final
 ```
 
-不要先用 `--preset slow` 渲完整片，也不要用 1080p 静帧做方向对比；低分辨率预览能看出的问题，不要留到终版。
+`make.mjs` 依次做：对齐 `duration` → 配乐/接手音乐 → 640×360/24fps 预览 → 1920×1080/30fps 终版（硬件编码优先）→ 每拍一张 QA 缩略图 → 首帧静帧 → 出片报告。
 
-### 4. 跑通 starter
+**改一段只重渲一段**：
 
 ```sh
-cp -R starter/. ~/Videos/my-film/
-cd ~/Videos/my-film
-npm install
-
-# 预览静帧：640 长边 JPEG，输出到 renders/preview/
-node still.mjs 0 1 4.2 7.4 --preview
-
-# 低分辨率预览：640×360、12fps、veryfast
-node render.mjs --from 0 --to 7.5 --preview --output videos/preview.mp4
-
-# 结构确认后再渲 1080p 测试片
-node render.mjs --from 0 --to 7.5 --fps 30 --output videos/test.mp4
+node render.mjs --from 12 --to 20 --output parts/p3.mp4 --audio audio/music.wav
+node render.mjs --concat parts --audio audio/music.wav --output videos/final.mp4
 ```
 
-`starter/` 是一个最小可跑的确定性渲染工程：1920×1080、`window.seek(t)`、逐字入场、卡片构建、结尾 CTA、Playwright 逐帧截图、ffmpeg 编码。
-
-如果本机没有 Playwright 浏览器：
+**卡点校验**（时间点是否都落在拍上）：
 
 ```sh
-export CHROME_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+python3 <skill-dir>/scripts/snap_plan.py plan.json --beats audio/beats.json --check --tolerance 0.03
 ```
 
-`render.mjs` / `still.mjs` 会自动探测常见 Chrome/Chromium 路径。
+不要把预览渲成 1080p，不要用 1080p 静帧做方向对比，不要在改一版之后整片重渲：单帧成本、分辨率、帧数三个旋钮决定一切，见 [`references/render-speed.md`](references/render-speed.md)。
 
 ### 5. 检查交付
 
@@ -512,12 +561,13 @@ python3 scripts/check_delivery.py plan.json --video videos/final.mp4 \
 ├── README.md                 本文件
 ├── CHANGELOG.md              版本记录
 ├── LICENSE                   MIT
-├── references/               15 份方法文档
-│   ├── fast-lane.md          输入已齐时的快车道：5 阶段、2 个人工点
+├── references/               16 份方法文档
+│   ├── fast-lane.md          默认六步流水线：音乐优先、一次出片、只重渲改动段
+│   ├── render-speed.md       渲染速度：五个旋钮、实测对照、时间预算
 │   ├── usage-playbook.md     用户怎么用、怎么给反馈
 │   ├── intake-and-modes.md   Intake、六种模式、素材清单
 │   ├── direction.md          参考拆解、三个方向、专属手法
-│   ├── style-presets.md      12 种风格关键词、视觉/运动规则、参考片
+│   ├── style-presets.md      24 种风格关键词、视觉/运动规则、参考片
 │   ├── script-and-voice.md   钩子、结构、口播节奏
 │   ├── oral-and-course.md    口播/课程剪辑
 │   ├── storyboard-and-plan.md 分镜、plan schema、音效 cue
@@ -530,13 +580,15 @@ python3 scripts/check_delivery.py plan.json --video videos/final.mp4 \
 │   └── case-study-framyriad.md 一帧亿影 MV 复盘
 ├── scripts/                  Python 工具
 │   ├── init_project.py       建工程、接收文案/音乐
+│   ├── make_music.py         代码合成配乐 + 节拍网格（六种预设）
+│   ├── snap_plan.py          plan 时间点吸附到拍点、卡点校验
 │   ├── lyric_budget.py       BPM / 小节 / 字数 / 行长
 │   ├── contact_sheet.py      视频联系表
 │   ├── still_sheet.py        静帧对比表（方向/风格）
 │   ├── loudness.py           Integrated / True Peak / LRA
 │   └── check_delivery.py     plan / 媒体 / 首帧 / 黑帧 / 响度 / 字幕
 ├── templates/                项目模板（BRIEF / DIRECTION / SCRIPT / STORYBOARD / QA / Suno / plan）
-├── starter/                  Playwright + ffmpeg 最小确定性渲染工程
+├── starter/                  Playwright + ffmpeg 确定性渲染工程（canvas draw(t)）
 ├── docs/assets/              README 配图
 ├── tools/package_skill.py    发布打包与校验（SkillHub / WorkBuddy）
 └── .github/workflows/check.yml
@@ -571,6 +623,9 @@ my-film/
 | 工具 | 作用 | 常用命令 |
 |---|---|---|
 | [`init_project.py`](scripts/init_project.py) | 建工程、复制模板、接收文案/音乐 | `python3 scripts/init_project.py --output ./my-film --mode product --title "..." --script ./copy.md --music ./music.mp3` |
+| [`make_music.py`](scripts/make_music.py) | 代码合成配乐 + 节拍网格（uplift / pulse / cinematic / edm / warm / ambient） | `python3 scripts/make_music.py --preset uplift --duration 30 --out audio/music.wav --grid audio/beats.json` |
+| [`snap_plan.py`](scripts/snap_plan.py) | 把 plan 的切点/动作时间吸附到拍点并报告漂移 | `python3 scripts/snap_plan.py plan.json --beats audio/beats.json --check --tolerance 0.03` |
+| [`make.mjs`](starter/make.mjs) | 一条命令：配乐 → 预览 → 终版 → 每拍缩略图 → 报告 | `node make.mjs --duration 30 --final` |
 | [`lyric_budget.py`](scripts/lyric_budget.py) | Suno 歌词：BPM / 小节 / 时长 / 字数 / 行长 / Hook | `python3 scripts/lyric_budget.py lyrics.md --bpm 124 --bars 27 --hook "绘声绘色，画就会唱"` |
 | [`contact_sheet.py`](scripts/contact_sheet.py) | 1–2 fps 视频联系表，检查整体节奏 | `python3 scripts/contact_sheet.py videos/final.mp4 --out renders/contact.png --fps 1` |
 | [`still_sheet.py`](scripts/still_sheet.py) | 多张静帧拼一张带标签的对比表；方向对比不逐张发 | `python3 scripts/still_sheet.py renders/preview/*.jpg --out renders/compare.png --label` |
@@ -609,15 +664,22 @@ python3 scripts/lyric_budget.py lyrics.md --bpm 124 --bars 27 \
 
 ## 示例
 
-下面是 `starter/` 实际渲染的静帧。它不是某支商业片，而是一个可跑的基线：首帧完整、每镜有动作、结尾有 CTA。
+这支 30 秒宣传片是 skill 用自己做的：七段结构、硬切全部落在拍上、配乐由 `make_music.py` 现场合成。
 
 <p align="center">
-  <img src="docs/assets/starter-first-frame.jpg" width="32%" alt="Starter first frame: Make it move" />
-  <img src="docs/assets/starter-three-rules.jpg" width="32%" alt="Starter middle: first frame, one move, one hit" />
-  <img src="docs/assets/starter-end-card.jpg" width="32%" alt="Starter end card: Tell it in motion" />
+  <a href="docs/assets/storyframe-promo.mp4"><img src="docs/assets/storyframe-promo-cover.jpg" width="68%" alt="30 秒宣传片封面，点开播放" /></a>
 </p>
 
-<p align="center"><sub>1920×1080 · 30fps · H.264 · 7.5s · Playwright + ffmpeg</sub></p>
+<p align="center">
+  <img src="docs/assets/promo-01-hook.jpg" width="24%" alt="开场：视频不是剪出来的，是写出来的" />
+  <img src="docs/assets/promo-03-styles.jpg" width="24%" alt="24 种风格墙，逐拍点亮" />
+  <img src="docs/assets/promo-04-beat.jpg" width="24%" alt="beats.json 波形与拍点" />
+  <img src="docs/assets/promo-05-cta.jpg" width="24%" alt="结尾安装命令" />
+</p>
+
+<p align="center"><sub>1920×1080 · 30fps · H.264 · 30.0s · −15.1 LUFS · 900 帧渲染 9.9 秒 · Canvas `draw(t)` + ffmpeg</sub></p>
+
+<p align="center"><strong><a href="docs/assets/storyframe-promo.mp4">▶ 播放这条 30 秒成片（4.7 MB）</a></strong></p>
 
 ### 两个真实案例复盘
 
@@ -665,6 +727,22 @@ python3 scripts/lyric_budget.py lyrics.md --bpm 124 --bars 27 \
 ## FAQ
 
 <details>
+<summary><strong>支持哪些 Agent 和模型？</strong></summary>
+
+任意。它不调用厂商 SDK、不需要 MCP、不需要特定 IDE；只要 agent 能读文件、能跑命令（或能驱动一个执行环境）就能用。已验证的接法见 [适用于任何 Agent 和模型](#适用于任何-agent-和模型)：技能目录（Claude Code / Codex / DSH / Cursor / Cline / Zed）、网页版/API 直连（把 `SKILL.md` 当系统提示注入）、纯命令行（自己按流程走）。
+
+强弱模型的差别只在"写多少代码"：强模型从零写 `scene.js`，快模型/小模型只改模板三处。不会写动效也能出结构完整的片子。
+
+</details>
+
+<details>
+<summary><strong>我的模型不会写复杂的动画代码，还能用吗？</strong></summary>
+
+能，而且这是它的设计前提。`starter/` 已经备好版式、入场、卡点、切镜：你只需要改 `src/config.js` 的文案与时长、`src/scene.js` 里的文字/数字数组、`src/stage.js` 的配色三处。画面组件的加法是"再加一个 `draw` 函数"，不是重写场景。
+
+</details>
+
+<details>
 <summary><strong>它和普通 AI 视频生成工具有什么区别？</strong></summary>
 
 普通工具主要解决“生成画面”；Storyframe 解决“这支片子是否成立”：故事、证据、时间、声音、验收。它可以用真实 UI/截图/录屏，也可以用代码做动效；最终交付带工程和 QA，不只是 MP4。
@@ -681,7 +759,7 @@ python3 scripts/lyric_budget.py lyrics.md --bpm 124 --bars 27 \
 <details>
 <summary><strong>必须安装 Playwright / Chrome 吗？</strong></summary>
 
-只有用 `starter/` 做代码驱动渲染时需要。只做规划、文案、剪辑类项目时，Python + ffmpeg 就够。
+只有用 `starter/` 这套参考实现做代码驱动渲染时需要。只做规划、文案、剪辑类项目时，Python + ffmpeg 就够；连 ffmpeg 都没有时也可以走"素材 + 音乐 + 时间线"的交付路径。降级表见 [SKILL.md 的「依赖与降级」](SKILL.md)。
 
 </details>
 

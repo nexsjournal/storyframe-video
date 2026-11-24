@@ -1,5 +1,59 @@
 # Changelog
 
+## 1.4.1 — 2026-11-25
+
+**主题：把“为某个模型/某个 harness 定制”改成“任意 Agent、任意 harness、任意模型都能用”。**
+
+- `SKILL.md` 新增「适用面：任意 Agent、任意 harness、任意模型」：三档用法（强模型从零写场景 / 快模型改模板三处 / 只有工具调用走剪辑路径）、兼容性说明、渲染器可替换的两条前置条件
+- 原「不可妥协」拆成 **硬底线 5 条**（真实、首帧、可复现、授权、声音不空）与 **默认口味 8 条**（可偏离，偏离写进 `DIRECTION.md` / `QA.md`，附"什么情况下换"的对照表）
+- 新增「依赖与降级」表：缺 python / node / Chrome / ffmpeg / 无 shell / 模型不会写复杂代码时的替代路径，硬底线不变
+- 「默认流水线」明确为默认路径而非唯一路径；`Starter` 改称**参考实现**，写明可换 Remotion / manim / Three.js / 录屏
+- front matter 增加 `compatibility` 字段，`description` / `summary` / `tags` 补模型与 harness 无关（`model-agnostic` / `harness-agnostic`）
+- `references/fast-lane.md` §5：canvas 由"必须"改为"默认实现"，新增「快模型只改三处」表（`config.js` / 数据数组 / `PALETTE`）与「模型无关的写法」
+- `references/render-speed.md`：明确实测数字是参考值不是门槛，换机器看趋势
+- `README.md` 新增「适用于任何 Agent 和模型」：决策/时间/检查/画面四层如何做到模型无关、三档用法、兼容性清单；安装段补 Cursor / Cline / Zed / 网页版与 API 直连的接法；徽章加 `any agent · any model`
+- 版本号升至 1.4.1
+
+
+## 1.4.0 — 2026-11-24
+
+**主题：把"慢"和"风格少"两件事一次解决 —— 音乐先出、画面按拍布点、Canvas 一次出片。**
+
+### 速度（实测，Apple M4 Pro / 1080p / 12 秒片 360 帧）
+
+- `starter/render.mjs` 重写 v2：CDP 直采 + `--deterministic-mode --run-all-compositor-stages-before-draw --disable-gpu-vsync --disable-frame-rate-limit`，去掉每帧 rAF 等待（默认 `--settle-frames 0`，与 settle=2 输出逐字节一致）
+- 帧走 ffmpeg stdin（`-f image2pipe -c:v mjpeg`），不再逐帧写磁盘
+- 新增 Canvas 采集快路：页面暴露 `window.__CAPTURE__='canvas'` 时用 `window.__frameJPEG(q)` 页内编码，绕开合成器
+- 编码器自动选：macOS 优先 `h264_videotoolbox`，其余 `libx264 -preset veryfast`；`--encoder` 可强制
+- 结果：轻 DOM 63 ms/帧 → 14 ms/帧；Canvas 9.2 ms/帧；12 秒 1080p30 **22.7 s → 3.4 s**；640 预览 359–408 fps
+- 新增 `--from/--to` 分段重渲 + `--concat` 拼接（`-c:v copy`，只重挂音轨），改一段只渲一段
+- 新增 `--beat-sheet N`：渲染时顺手存"每 N 拍一张"QA 缩略图，不再对成片跑第二遍抽帧
+- 新增 `starter/make.mjs`：一条命令完成 配乐 → 预览 → 终版 → 每拍缩略图 → 首帧 → 报告（12 秒片全流程 8 秒）
+
+### 音乐与卡点
+
+- 新增 `scripts/make_music.py`：numpy/scipy 代码合成配乐，六种预设（`uplift` / `pulse` / `cinematic` / `edm` / `warm` / `ambient`），自动分段（intro/build/main/break/main/outro）、侧链压缩、卷积混响、软限幅、−14 LUFS 归一化、固定 seed 可复现
+- 同一命令产出 `audio/beats.json`：BPM、拍点、小节、段落能量、重音表，作为画面时间的唯一来源
+- 新增 `scripts/snap_plan.py`：把 `plan.json` 的切点/动作/cue 吸附到 1/sub 拍并报告漂移，`--check` 可直接当卡点门禁
+- 新增 `starter/src/stage.js`：canvas 工具层（闭式弹簧、`Grid` 节拍类、`Stage` 采集、排版与图形基元）
+- `starter/src/scene.js` 改写为默认演示片「一拍，一帧」：12s/24 拍，六段硬切全部落在拍点，首帧即完成态
+
+### 风格
+
+- `references/style-presets.md`：12 → **24 种视觉语法**，新增流体着色器、粒子群、三维世界、终端 HUD、液态铬、蓝图线框、轨道太空、地图叙事、霓虹复古、故障腐蚀、音频反应、白场极简；附"按渲染成本挑风格"分档表（6 ms → 80 ms）
+
+### 流程与文档
+
+- `SKILL.md` 新增「默认流水线：音乐先走，一次出片」六步图与速度预算；声音硬规则改为**默认无配音**（宣传片只上音乐 + 音效），明确禁止脑补口播/方言念白
+- `references/fast-lane.md` 重写为默认执行流程：六步、实测时间表、只重渲改动段、"明确不做的事"清单
+- 新增 `references/render-speed.md`：五个时间旋钮、实测对照表（含重 DOM 只快 1.16× 的反例）、旧流程四个慢因、按片长的时间预算、自检命令
+- `references/audio-and-music.md` 增补代码合成配乐、六预设表、卡点 API 用法与校验
+- `starter/still.mjs` 重写 v2：快参数、JPEG 默认、`--beat-sheet`、`--sheet` 直接拼表
+- `starter/index.html` 改 canvas 舞台 + `src/scene.js`；旧 DOM 演示保留为 `starter/dom.html`
+- README 快速开始改为"一条命令出片"，工具链表补 `make_music.py` / `snap_plan.py` / `make.mjs`
+- 版本号升至 1.4.0
+
+
 ## 1.3.0 — 2026-11-12
 
 - 新增 `references/fast-lane.md`：输入已齐（prompt/文案 + 素材 + 音乐）时的 5 阶段快车道，跳过 3 方向、完整 research、animatic 视频和 1080p rough cut

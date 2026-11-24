@@ -6,15 +6,16 @@ displayName: Storyframe 视频生产系统
 display_name: Storyframe 视频生产系统
 display_name_en: Storyframe Video
 category: Design Tools
-description_zh: 从 brief、文案、音乐到 15–180 秒成片：六种模式、12 种风格预设、确定性渲染与自动质检。
-description_en: A production system for agent-made videos, from brief and script to storyboard, sound, deterministic rendering, and QA.
+description_zh: 从 brief、文案、音乐到 15–180 秒成片：六种模式、24 种风格预设、代码合成配乐 + 节拍卡点、确定性渲染与自动质检。适配任意 Agent、任意 harness、任意模型：强模型从零写场景，快模型填模板，只有工具调用时走剪辑降级路径。
+description_en: A production system for agent-made videos: 24 style presets, code-synthesized music with a beat grid, beat-locked canvas rendering (8 s for a 12 s 1080p clip), and automated QA.
 author: nexsjournal
-version: 1.3.0
-summary: 从 brief、文案、音乐到成片的视频生产系统：方向、分镜、节拍、Suno 歌词、Playwright + ffmpeg 确定性渲染与自动质检；输入已齐可走快车道，先低分辨率预览再终渲。
+version: 1.4.1
+summary: 模型与 harness 无关的视频生产系统：音乐先出、画面按拍布点、一次出片，Playwright + ffmpeg 确定性渲染与自动质检；强模型写场景、快模型填模板、纯工具调用走剪辑路径；60 秒 1080p 片约 25 秒渲完。
+compatibility: 任意 Agent / 任意 harness（Claude Code、Codex、DSH、Cursor、Cline、Zed、自建 loop）/ 任意模型。不依赖任何厂商 SDK 或 MCP；只用文件 + 命令行。
 license: MIT
 homepage: https://github.com/nexsjournal/storyframe-video
-tags: [video, product-video, motion-graphics, storyboard, ffmpeg, playwright, suno, mv]
-description: 从 brief 到成片的标准视频生产系统，覆盖产品推广、知识讲解、口播优化、活动宣传、课程演示和音乐 MV。先接收并核验用户提供的文案、音乐、录屏、截图、Logo 与参考片，再用真实素材、故事方向、分镜、节拍表、声音设计和验收清单，产出 15–180 秒的 16:9 / 9:16 / 1:1 成片；包含 Suno 歌词制作单、Playwright + ffmpeg 确定性渲染和自动质检。当用户要求做宣传片、讲解片、活动片、课程演示、口播剪辑、产品片、MV，或要把一段文案/歌曲/录屏变成视频时使用。支持 UI 电影、动态字体、纸感手作、丝网印、像素世界等 12 种风格关键词。
+tags: [video, product-video, motion-graphics, storyboard, ffmpeg, playwright, beat-sync, procedural-audio, mv, model-agnostic, harness-agnostic]
+description: 从 brief 到成片的标准视频生产系统，覆盖产品推广、知识讲解、口播优化、活动宣传、课程演示和音乐 MV。先接收并核验用户提供的文案、音乐、录屏、截图、Logo 与参考片，再用真实素材、故事方向、分镜、节拍表、声音设计和验收清单，产出 15–180 秒的 16:9 / 9:16 / 1:1 成片；包含代码合成配乐与节拍网格、Playwright + ffmpeg 确定性渲染和自动质检；默认不加配音，画面卡点全部吸附到 beats.json。当用户要求做宣传片、讲解片、活动片、课程演示、口播剪辑、产品片、MV，或要把一段文案/歌曲/录屏变成视频时使用。支持 UI 电影、动态字体、纸感手作、丝网印、像素世界、流体着色器、音频反应等 24 种风格关键词。方法重于工具：渲染器、音乐生成、检查脚本都是参考实现，可以换成环境里已有的能力。
 ---
 
 # Storyframe 视频生产系统
@@ -22,6 +23,56 @@ description: 从 brief 到成片的标准视频生产系统，覆盖产品推广
 把视频当成一个 **故事 + 证据 + 时间 + 声音** 的工程，而不是会动的 PPT。每一支片子先回答“观众看完记住什么”，再决定画面、文案、镜头和声音。
 
 本 skill 的默认交付：**能直接投放的 MP4 + 封面 + 字幕 + 可复现工程 + 验收报告**。不是“给几个创意”，也不是“先堆素材再说”。
+
+## 适用面：任意 Agent、任意 harness、任意模型
+
+这不是某个模型的补丁，也不是某个 harness 的插件。它是**方法 + 可替换的参考实现**：判断写成文件，时间写成拍点，渲染交给环境里有的能力。
+
+| 你的环境 | 怎么用 | 期望结果 |
+|---|---|---|
+| 强模型 + 能跑命令的 harness | 从零写 `src/scene.js`，自由设计画面与动效 | 30 秒片端到端 ≤3 分钟 |
+| 快模型 / 小模型（flash 类、本地小模型） | **不要从零写场景**：改模板里的文字、数据、配色三处（见 [快车道 §5](references/fast-lane.md)） | 同样能出片，少走一轮返工 |
+| 只有工具调用、不能跑 shell/node | 用现成素材 + 现成音乐走剪辑/合成路径，`plan.json` 当时间线，人工核对 | 交付仍完整，只是没有代码动画 |
+| 已有自己的渲染栈（Remotion / manim / Canvas 自建 / 录屏） | 把本 skill 当流程与验收规范，渲染层换掉 | 保留卡点、首帧、QA 的硬底线 |
+
+**兼容性**：不调用任何厂商 SDK、不需要 MCP、不需要特定 IDE；只要能读写文件、能执行命令（或能驱动一个执行环境），就能跑。已按 Claude Code / Codex / DSH / Cursor / Cline / Zed / 自建 loop 的通用约定组织：`SKILL.md` 是唯一入口，其余全是相对路径。
+
+**模型无关靠三件事**：① 决策落成文件（`BRIEF.md` / `DIRECTION.md` / `plan.json` / `QA.md`），换模型、换 harness 都能接着做；② 时间落成拍点（`beats.json`），不依赖"感觉"；③ 检查落成脚本（`check_delivery.py` / `snap_plan.py`），不依赖模型自觉。
+
+**渲染器是可换的**：`starter/` 里的 Playwright + ffmpeg 是参考实现，只要求两条——同一个 `t` 渲染出同一帧、切点落在拍上。换成任何满足这两条的实现都算合格。
+
+---
+
+## 默认流水线：音乐先走，一次出片
+
+这是默认路径，不是唯一路径。缺 python / node / ffmpeg / Chrome 时按文末[依赖与降级](#依赖与降级)表换做法，硬底线不变。
+
+除非"方向完全没定、需要比稿"，默认按这条流水线走。**音乐是时间源，画面跟着拍点布** —— 不是先写画面再找音乐硬凑。
+
+```
+① 定参数    时长 / 画幅 / 用途 / 风格词           → BRIEF.md
+② 出音乐    scripts/make_music.py                 → audio/music.wav + audio/beats.json
+③ 锁首帧    1 张 640 静帧（可跳过）               → DIRECTION.md
+④ 写场景    canvas draw(t)，切点读 beats.json     → src/scene.js
+⑤ 一次出片  starter/make.mjs                      → preview + final + 每拍联系表
+⑥ 一轮精修  只重渲改动段 + concat                  → videos/final.mp4
+```
+
+```sh
+# ② 配乐 + 节拍网格（六种预设：uplift / pulse / cinematic / edm / warm / ambient）
+python3 scripts/make_music.py --preset uplift --duration 30 --out audio/music.wav --grid audio/beats.json
+
+# ⑤ 预览 + 终版 + QA 缩略图，一条命令
+cd <project> && node make.mjs --duration 30 --preset uplift --final
+```
+
+**速度预算（60 秒 1080p30，本机实测）**：配乐 3 s、预览 4 s、终版 20 s、全流程 < 3 min。单帧成本 > 40 ms 就说明场景有问题（见 [渲染速度](references/render-speed.md)）。
+
+**默认不做**：跑 Suno 歌词单（只有 `mv` 且用户给人声/歌词时才做）、加配音或方言念白、逐帧等 rAF、1080p PNG 静帧、渲完再抽帧扫成片、每改一版全片重渲。
+
+**声音默认只有音乐**：宣传片靠配乐 + 动作音效推进；没有人声需求就不出现人声。要口播/配音时由用户明确提出，并按 `oral` 模式单独处理。
+
+---
 
 ## 启动：先接素材，再问问题
 
@@ -54,7 +105,7 @@ description: 从 brief 到成片的标准视频生产系统，覆盖产品推广
 - **只做 1 个方向**；最多 3 张 480×270 对比缩略图；首帧只渲 1 张 **640 长边 JPEG**（16:9 = 640×360）。
 - 先出 **640 长边 / 12fps** 预览，P2 通过后再出 1080p 终版。
 - 只有 **2 个人工点**：首帧确认（可跳过）+ 预览确认；标准流程的 Gate A/B/C 不再逐个停。
-- 60 秒片目标：首次预览 3–5 分钟，终版 12–20 分钟（以本机为准）。
+- 60 秒片目标：预览 ≤ 5 秒、终版 ≤ 30 秒（canvas `draw(t)` + 硬件编码；实测全流程 ~35 秒，见 [渲染速度](references/render-speed.md)）。
 
 **默认不要**为每个方向生成视频、不要用 1080p PNG 做方向对比、不要先渲完整片再改结构。
 
@@ -83,15 +134,30 @@ description: 从 brief 到成片的标准视频生产系统，覆盖产品推广
 
 混合需求先定 **主模式**，再叠加次模式。例如“活动宣传 + 产品演示”用 `event` 的节奏，借 `product` 的真实 UI；不要同时套两套结构。
 
-## 不可妥协
+## 硬底线（这 5 条偏离 = 交付不合格）
 
 1. **真实与证据。** 产品功能、数据、日期、场地、课程步骤必须可追溯；不编造界面、指标、引语。每条主张记录来源和范围。
 2. **首帧就是完整画面。** 平台会把第一帧当缩略图；前 5–10 帧不能是空白、纯背景或等待入场。先把开场段落的完成态放上去，再播动画。
-3. **不是幻灯片。** 每个镜头至少有一个：镜头运动、字体变形、材质转场、主体动作、声音驱动的切点。连续两个纯静态全屏卡片就算失败；只有结尾海报可以静态，但也要有进入动作。
-4. **声音是叙事。** 默认有音乐、口播/人声、动作音效；关键动作听得见，音画同帧。静音需求必须记录例外原因。
-5. **字幕与可读性。** 1080p 下产品界面正文 ≥22px；字幕中文 ≤16 字/行、最多 2 行；英文 ≤42 字符/行；高对比、避开平台 UI 安全区。
-6. **版权与授权。** 音乐、字体、素材、产品截图都要有来源/许可；用户没授权的内容不进入成片。
-7. **可复现。** 代码驱动的片子用 `window.seek(t)` 确定性渲染；剪辑类片子保留 EDL/决策记录、源素材清单和导出参数。
+3. **可复现。** 同一输入产出同一结果：代码驱动用 `window.seek(t)` 或等价的时间纯函数；剪辑类保留 EDL/决策记录、源素材清单和导出参数。
+4. **版权与授权。** 音乐、字体、素材、产品截图都要有来源/许可；用户没授权的内容不进入成片。
+5. **声音不空。** 有音乐、有人声，或"设计过的静音"（并在 `QA.md` 记录原因）。不能出现无理由的无声段。
+
+## 默认口味（可以偏离，偏离要写进 `DIRECTION.md` 或 `QA.md`）
+
+这些是**默认值，不是禁令**。有更好的做法就用更好的，只要说明为什么、以及放弃了哪条默认。
+
+| 默认 | 什么情况下换成别的 |
+|---|---|
+| 不是幻灯片：每个镜头至少一个运动/转场/主体动作 | 静态海报式收尾、特写停帧也可以，只要片内有节奏对比 |
+| 声音只有音乐，不加配音 | 用户要口播、或模式是 `explainer` / `oral` / `course` 时加人声 |
+| 画面用 Canvas `draw(t)` | 要真实 UI 就用 DOM；要纵深就用 Three.js；要实拍就剪辑 |
+| 预览 640、终版一次出片（`make.mjs`） | 没有 node/Chrome 时换别的渲染器或录屏 |
+| 24 种风格预设 + 六种模式 | 用户有明确视觉方向时，预设只作对照，不硬套 |
+| 响度 −14 LUFS / ≤ −1 dBTP | 展会大屏 −10.5 到 −12；广播 −23（EBU R128） |
+| 中文口播 12–22 字/句、字幕 ≤16 字/行 | 平台/画幅/语言不同时按可读性调整 |
+| 切点落在拍上（误差 ≤30 ms） | 无音乐或纯旁白片，用语义断点，但要标在 `plan.json` |
+
+**唯一的判断标准**：交付能不能被验证。能被验证的偏离，比机械遵守默认值更好。
 
 ## 标准流程（探索型项目，0–10 共 11 步，4 个 Gate）
 
@@ -254,7 +320,7 @@ project/
 
 - **一个主张**：整片只推一个核心承诺；所有镜头都在证明它。
 - **三个轴**：叙事（问题→解决 / 一天 / 对比）、视觉（纸/墨、UI 电影、数据仪器、手作）、声音（轻电子、环境、无音乐）。探索型项目的三个方向必须在这三个轴上不同；快车道只做一个方向。
-- **风格预设不是模板**：关键词决定语法（材质、运动、排版、禁忌），叙事轴仍然要重新推导；12 个预设见 [风格预设](references/style-presets.md)。
+- **风格预设不是模板**：关键词决定语法（材质、运动、排版、禁忌），叙事轴仍然要重新推导；24 个预设见 [风格预设](references/style-presets.md)。
 - **专属手法**：3–5 个“因为产品有 X，所以用 Y”。例如“因为画线会生成旋律，所以让线条在副歌变成声波/五线谱/3D 纸带”。
 - **反重复**：同一工作区连续做片，不复用上一支的开场、章节、背景；片内不要所有元素同一种入场。
 - **反 PPT**：每场至少一个运动/转场/主体动作；连续静态卡片 ≤2；不要“标题+三行 bullet”重复。
@@ -288,6 +354,8 @@ project/
 - 音效不要盖住辅音；关键动作前后留 50–100ms 空间。
 - 低频不要堆；手机外放检查一次。
 - 音乐结尾要设计：硬收/铃/混响尾，不要突然断。
+- 默认没有配音；宣传片的人声只有在用户要求或 `oral`/`explainer`/`course` 模式才加入，且不加方言/口音演绎。
+- 切点即拍点：`beats.json` 的 `beats` / `accents` 是硬切、冲击音效、大字入场的唯一时间源。
 
 ## 交付定义（Done）
 
@@ -304,9 +372,24 @@ project/
 ## 工具入口
 
 ```sh
-# 快车道：低分辨率首帧 + 预览（先看结构，不渲 1080p）
-node still.mjs 1.2 4.0 8.5 --preview
-node render.mjs --from 0 --to 60 --preview --audio audio/music.mp3 --output videos/preview.mp4
+# 一条命令出片（音乐 → 预览 → 终版 → 每拍 QA 缩略图）
+node make.mjs --duration 30 --preset uplift --final
+node make.mjs --duration 15 --audio ../music.mp3 --skip-music    # 用用户给的歌
+
+# 配乐 + 节拍网格（先跑这个，再写画面）
+python3 scripts/make_music.py --preset pulse --duration 30 --out audio/music.wav --grid audio/beats.json
+python3 scripts/make_music.py --list                              # 看六个预设
+
+# 低分辨率首帧 / 每拍一帧的联系表
+node still.mjs 0 --preview
+node still.mjs --beat-sheet --every 2 --out-dir renders/beats
+
+# 只重渲改动段，再拼回整片
+node render.mjs --from 12 --to 20 --output parts/p3.mp4 --audio audio/music.wav
+node render.mjs --concat parts --audio audio/music.wav --output videos/final.mp4
+
+# 时间点吸附到拍上（卡点检查）
+python3 scripts/snap_plan.py plan.json --beats audio/beats.json --check --tolerance 0.03
 
 # 初始化项目（复制模板 + plan 骨架；有文案/音乐就直接带进来）
 python3 <skill-dir>/scripts/init_project.py --output <video-dir> --mode product --title "..." \
@@ -315,20 +398,36 @@ python3 <skill-dir>/scripts/init_project.py --output <video-dir> --mode product 
 # Suno/歌词：按 BPM 和小节算时间、字数、行长
 python3 <skill-dir>/scripts/lyric_budget.py lyrics.md --bpm 124 --bars 27 --hook "绘声绘色，画就会唱"
 
-# 联系表 / 响度 / 交付检查
+# 响度 / 交付检查（联系表已由 render.mjs --beat-sheet 顺手产出，不必再扫成片）
 python3 <skill-dir>/scripts/contact_sheet.py videos/final.mp4 --out renders/contact.png --fps 1
 python3 <skill-dir>/scripts/loudness.py videos/final.mp4
 python3 <skill-dir>/scripts/check_delivery.py plan.json --video videos/final.mp4 \
   --mix-report audio/mix_report.json --captions videos/final.srt
 ```
 
+## 依赖与降级
+
+工具是手段，不是门槛。缺什么就用环境里已有的能力替代，硬底线（真实、首帧、可复现、授权、有声）不变。
+
+| 缺什么 | 受影响 | 降级做法（照这个顺序试） |
+|---|---|---|
+| `python3` | 配乐合成、拍点吸附、交付检查 | 用用户给的音乐；按 BPM 手算拍点写 `beats.json`（`beatDur = 60/BPM`）；用 `ffprobe`/播放器人工核对 |
+| `node` / 浏览器 | 代码驱动渲染 | 用 harness 自带渲染、Remotion、manim；或用 DOM 页面 + 系统录屏；`plan.json` 当时间线 |
+| `ffmpeg` | 编码、响度、抽帧 | 用系统/云端转码；响度用播放器 + 耳朵；抽帧用播放器截图 |
+| 无 shell（只有工具调用） | 一切脚本 | 走剪辑路径：素材 + 音乐 + 字幕；交付时间线/EDL + 工程文件，`QA.md` 写清哪些没自动验证 |
+| 无 Chrome headless | `render.mjs` 取帧 | 用有头浏览器 + `--headless=false`；或改用录屏；或换 puppeteer |
+| 模型不会写复杂代码 | 画面质量 | 只改模板三处（`config.js` / 数据数组 / `PALETTE`），画面用现成组件组合，不新写渲染逻辑 |
+
+判断标准只有一条：**交付物能不能被验证**。验证不了的，就明确写进 `QA.md`，不要假装跑过。
+
 ## 参考索引
 
-- [快车道](references/fast-lane.md)：输入已齐时的 5 阶段、2 个人工点、低分辨率对比和 token 预算。
+- [快车道](references/fast-lane.md)：默认六步流水线、音乐优先、一次出片、只重渲改动段的操作细则。
+- [渲染速度](references/render-speed.md)：五个时间旋钮、实测对照表、旧流程为什么慢、时间预算与自检。
 - [使用手册](references/usage-playbook.md)：用户要准备什么、怎么开场、四个 Gate 怎么给反馈、五种常见起点。
 - [Intake 与六种模式](references/intake-and-modes.md)：问题清单、六种模式、交付物。
 - [影片方向](references/direction.md)：参考拆解、三个方向、专属手法、视觉规范。
-- [风格预设](references/style-presets.md)：12 种风格关键词、视觉/运动规则、公开参考片。
+- [风格预设](references/style-presets.md)：24 种风格关键词、视觉/运动规则、公开参考片，附按渲染成本分档。
 - [脚本与口播](references/script-and-voice.md)：钩子、结构、口播节奏、口播优化。
 - [口播与课程](references/oral-and-course.md)：原片 paper edit、J/L cut、字幕、录屏步骤、课程节奏。
 - [分镜与 plan](references/storyboard-and-plan.md)：镜头表、plan schema、时间覆盖、音效 cue。
@@ -342,13 +441,14 @@ python3 <skill-dir>/scripts/check_delivery.py plan.json --video videos/final.mp4
 
 ## Starter
 
-`starter/` 是一个最小可跑的确定性渲染工程：1920×1080、`window.seek(t)`、Playwright 逐帧截图、ffmpeg 编码。复制后改 `src/main.js` 的场景数据和 `styles.css` 的视觉系统即可。运行：
+`starter/` 是一个**参考实现**，不是运行前提：canvas 舞台 + `window.seek(t)` + 逐字入场 + 卡片/图表/时间轴组件 + Playwright 取帧 + ffmpeg 编码。复制后：
+
+- 换文案/数据/配色：改 `src/config.js`、`src/scene.js` 里的数据数组、`src/stage.js` 的 `PALETTE`（快模型只动这三处就够）。
+- 换渲染器：只要满足"同一 `t` 同一帧 + 切点落在拍上"，用 Remotion / manim / Three.js / DOM + 录屏都行，`make.mjs` 换成对应的构建命令即可。
 
 ```sh
 cd <project>
-npm install
-node still.mjs 1.0 3.0
-node render.mjs --from 0 --to 7 --fps 30 --output videos/test.mp4
+npm install                 # 只有用 starter 的渲染器时才需要
+node make.mjs --duration 30 --final
 ```
 
-如果本机没有 Playwright 浏览器，设置 `CHROME_PATH` 指向 Chrome/Chromium；渲染脚本会自动探测常见路径。

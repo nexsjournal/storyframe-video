@@ -54,7 +54,8 @@ EXCLUDE_DIRS = {
     "tools",
 }
 EXCLUDE_FILES = {".DS_Store", ".gitignore"}
-EXCLUDE_SUFFIXES = (".pyc",)
+# 演示成片留在仓库给 README 看，不塞进安装包（5MB 一次下载不值得）
+EXCLUDE_SUFFIXES = (".pyc", ".mp4", ".mov", ".wav")
 
 SLUG_RE = re.compile(r"^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$")
 SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$")
