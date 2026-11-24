@@ -36,10 +36,10 @@
 默认交付不是“几个创意”，而是 **MP4 + 封面 + SRT + 可复现工程 + 验收报告**。
 
 <p align="center">
-  <a href="https://nexsjournal.github.io/storyframe-video/docs/assets/storyframe-promo.mp4"><img src="docs/assets/storyframe-promo-loop.gif" width="86%" alt="Storyframe 30 秒宣传片片段：视频不是剪出来的，是写出来的" /></a>
+  <a href="https://nexsjournal.github.io/storyframe-video/assets/storyframe-promo.mp4"><img src="docs/assets/storyframe-promo-loop.gif" width="86%" alt="Storyframe 30 秒宣传片片段：视频不是剪出来的，是写出来的" /></a>
 </p>
 
-<p align="center"><sub>上面是它自己做的 30 秒宣传片的循环片段（124 BPM，硬切全部落在拍上，配乐由代码合成）· <a href="https://nexsjournal.github.io/storyframe-video/docs/assets/storyframe-promo.mp4">看完整版 ▶</a></sub></p>
+<p align="center"><sub>上面是它自己做的 30 秒宣传片的循环片段（124 BPM，硬切全部落在拍上，配乐由代码合成）· <a href="https://nexsjournal.github.io/storyframe-video/assets/storyframe-promo.mp4">看完整版 ▶</a></sub></p>
 
 > **速度**：12 秒 1080p30 全片（含配乐合成、预览、终版、每拍 QA 缩略图）实测 **8 秒**；60 秒片 **约 25 秒**。渲染层用 Canvas `draw(t)` + 硬切卡点 + ffmpeg 管道，单帧 9 ms。
 >
@@ -207,7 +207,7 @@
 ### 它自己就是证据
 
 <p align="center">
-  <a href="https://nexsjournal.github.io/storyframe-video/docs/assets/storyframe-promo.mp4"><img src="docs/assets/storyframe-promo-cover.jpg" width="100%" alt="Storyframe 30 秒宣传片：点开播放" /></a>
+  <a href="https://nexsjournal.github.io/storyframe-video/assets/storyframe-promo.mp4"><img src="docs/assets/storyframe-promo-cover.jpg" width="100%" alt="Storyframe 30 秒宣传片：点开播放" /></a>
 </p>
 
 <p align="center"><sub><strong>▶ 点开播放</strong> · 30 秒 · 1280×720 / 30fps · 124 BPM 全程卡点 · 配乐也是代码合成的<br />
@@ -673,7 +673,7 @@ python3 scripts/lyric_budget.py lyrics.md --bpm 124 --bars 27 \
 这支 30 秒宣传片是 skill 用自己做的：七段结构、硬切全部落在拍上、配乐由 `make_music.py` 现场合成。
 
 <p align="center">
-  <a href="https://nexsjournal.github.io/storyframe-video/docs/assets/storyframe-promo.mp4"><img src="docs/assets/storyframe-promo-cover.jpg" width="68%" alt="30 秒宣传片封面，点开播放" /></a>
+  <a href="https://nexsjournal.github.io/storyframe-video/assets/storyframe-promo.mp4"><img src="docs/assets/storyframe-promo-cover.jpg" width="68%" alt="30 秒宣传片封面，点开播放" /></a>
 </p>
 
 <p align="center">
@@ -685,7 +685,7 @@ python3 scripts/lyric_budget.py lyrics.md --bpm 124 --bars 27 \
 
 <p align="center"><sub>1920×1080 · 30fps · H.264 · 30.0s · −15.1 LUFS · 900 帧渲染 9.9 秒 · Canvas `draw(t)` + ffmpeg</sub></p>
 
-<p align="center"><strong><a href="https://nexsjournal.github.io/storyframe-video/docs/assets/storyframe-promo.mp4">▶ 播放这条 30 秒成片（720p，0.86 MB，浏览器内直接播）</a></strong></p>
+<p align="center"><strong><a href="https://nexsjournal.github.io/storyframe-video/assets/storyframe-promo.mp4">▶ 播放这条 30 秒成片（720p，0.86 MB，浏览器内直接播）</a></strong></p>
 
 ### 两个真实案例复盘
 
