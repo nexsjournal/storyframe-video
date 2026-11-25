@@ -24,6 +24,9 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from check_frontmatter import check as strict_frontmatter_check  # noqa: E402
 DIST = ROOT / "dist"
 PKG_NAME = "storyframe-video-skill"
 
@@ -214,6 +217,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="只校验，不生成文件")
     args = parser.parse_args()
+
+    problems = strict_frontmatter_check(ROOT / "SKILL.md")
+    if problems:
+        print("✗ SKILL.md 的 frontmatter 不通过严格 YAML 校验（装进 harness 会直接加载失败）：")
+        for problem in problems:
+            print(f"   - {problem}")
+        return 1
 
     meta = read_frontmatter(ROOT / "SKILL.md")
     check_metadata(meta)

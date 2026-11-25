@@ -21,6 +21,12 @@ jobs:
       - name: Compile Python
         run: python -m compileall -q scripts
 
+      - name: Validate SKILL.md frontmatter
+        run: |
+          python -m compileall -q tools
+          python tools/check_frontmatter.py SKILL.md
+          python tools/package_skill.py --check
+
       - name: Create a project from templates
         run: |
           python scripts/init_project.py \
