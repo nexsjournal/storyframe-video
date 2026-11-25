@@ -2,20 +2,24 @@
 name: storyframe-video-skill
 slug: storyframe-video
 displayName: Storyframe 视频生产系统
-# WorkBuddy 开放平台使用下划线字段名；与 SkillHub 的 displayName 并存不影响解析
 display_name: Storyframe 视频生产系统
 display_name_en: Storyframe Video
 category: Design Tools
-description_zh: 从 brief、文案、音乐到 15–180 秒成片：六种模式、24 种风格预设、代码合成配乐 + 节拍卡点、确定性渲染与自动质检。适配任意 Agent、任意 harness、任意模型：强模型从零写场景，快模型填模板，只有工具调用时走剪辑降级路径。
-description_en: A production system for agent-made videos: 24 style presets, code-synthesized music with a beat grid, beat-locked canvas rendering (8 s for a 12 s 1080p clip), and automated QA.
+description_zh: >-
+  从 brief、文案、音乐到 15–180 秒成片：六种模式、24 种风格预设、代码合成配乐 + 节拍卡点、确定性渲染与自动质检。适配任意 Agent、任意 harness、任意模型：强模型从零写场景，快模型填模板，只有工具调用时走剪辑降级路径。
+description_en: >-
+  A production system for agent-made videos: 24 style presets, code-synthesized music with a beat grid, beat-locked canvas rendering (9 s for a 12 s 1080p clip), and automated QA.
 author: nexsjournal
-version: 1.4.1
-summary: 模型与 harness 无关的视频生产系统：音乐先出、画面按拍布点、一次出片，Playwright + ffmpeg 确定性渲染与自动质检；强模型写场景、快模型填模板、纯工具调用走剪辑路径；60 秒 1080p 片约 25 秒渲完。
-compatibility: 任意 Agent / 任意 harness（Claude Code、Codex、DSH、Cursor、Cline、Zed、自建 loop）/ 任意模型。不依赖任何厂商 SDK 或 MCP；只用文件 + 命令行。
+version: 1.4.2
+summary: >-
+  模型与 harness 无关的视频生产系统：音乐先出、画面按拍布点、一次出片，Playwright + ffmpeg 确定性渲染与自动质检；强模型写场景、快模型填模板、纯工具调用走剪辑路径；60 秒 1080p 片约 25 秒渲完。
+compatibility: >-
+  任意 Agent / 任意 harness（Claude Code、Codex、DSH、Cursor、Cline、Zed、自建 loop）/ 任意模型。不依赖任何厂商 SDK 或 MCP；只用文件 + 命令行。
 license: MIT
 homepage: https://github.com/nexsjournal/storyframe-video
 tags: [video, product-video, motion-graphics, storyboard, ffmpeg, playwright, beat-sync, procedural-audio, mv, model-agnostic, harness-agnostic]
-description: 从 brief 到成片的标准视频生产系统，覆盖产品推广、知识讲解、口播优化、活动宣传、课程演示和音乐 MV。先接收并核验用户提供的文案、音乐、录屏、截图、Logo 与参考片，再用真实素材、故事方向、分镜、节拍表、声音设计和验收清单，产出 15–180 秒的 16:9 / 9:16 / 1:1 成片；包含代码合成配乐与节拍网格、Playwright + ffmpeg 确定性渲染和自动质检；默认不加配音，画面卡点全部吸附到 beats.json。当用户要求做宣传片、讲解片、活动片、课程演示、口播剪辑、产品片、MV，或要把一段文案/歌曲/录屏变成视频时使用。支持 UI 电影、动态字体、纸感手作、丝网印、像素世界、流体着色器、音频反应等 24 种风格关键词。方法重于工具：渲染器、音乐生成、检查脚本都是参考实现，可以换成环境里已有的能力。
+description: >-
+  从 brief 到成片的标准视频生产系统，覆盖产品推广、知识讲解、口播优化、活动宣传、课程演示和音乐 MV。先接收并核验用户提供的文案、音乐、录屏、截图、Logo 与参考片，再用真实素材、故事方向、分镜、节拍表、声音设计和验收清单，产出 15–180 秒的 16:9 / 9:16 / 1:1 成片；包含代码合成配乐与节拍网格、Playwright + ffmpeg 确定性渲染和自动质检；默认不加配音，画面卡点全部吸附到 beats.json。当用户要求做宣传片、讲解片、活动片、课程演示、口播剪辑、产品片、MV，或要把一段文案/歌曲/录屏变成视频时使用。支持 UI 电影、动态字体、纸感手作、丝网印、像素世界、流体着色器、音频反应等 24 种风格关键词。方法重于工具：渲染器、音乐生成、检查脚本都是参考实现，可以换成环境里已有的能力。
 ---
 
 # Storyframe 视频生产系统

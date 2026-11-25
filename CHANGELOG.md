@@ -1,4 +1,10 @@
-# Changelog
+## 1.4.2
+
+**修 bug：`SKILL.md` 的 frontmatter 是非法 YAML，导致技能在所有用真实 YAML 解析器的 harness 里"装了但加载不到"**（`skill "storyframe-video-skill" is unknown or no longer available`）。
+
+- 根因：`description_en` 的值里有 `videos: 24 style presets…`——英文冒号 + 空格让 YAML 把它当成嵌套映射，整块 frontmatter 解析失败；DSH 的 `parseSkillFile` 捕获异常后 `return undefined`，技能直接从目录里消失。自 1.3 起就存在，只是没人从加载侧验证过。
+- 修法：所有长描述字段改成 `>-` 折叠块标量（值单行，不引入空格），`description_zh` / `description_en` / `summary` / `compatibility` / `description` 五个字段全部 YAML 安全。
+- 加验证：发布前用 harness 同款 `yaml` 库解析 frontmatter，失败即阻断。同类检查也扫了本机所有已装技能（37 可解析 / 1 报错，唯一报错的就是本技能）。
 
 ## 1.4.1 — 2026-11-25
 

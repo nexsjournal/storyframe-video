@@ -4,7 +4,7 @@
   <p><strong>把视频当成一个工程，而不是会动的 PPT。</strong><br />
   故事 · 证据 · 时间 · 声音 · 验收</p>
   <p>
-    <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.4.1-F2416B?style=flat-square" alt="Version 1.4.1" /></a>
+    <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/version-1.4.2-F2416B?style=flat-square" alt="Version 1.4.1" /></a>
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-17141A?style=flat-square" alt="MIT License" /></a>
     <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.10+" />
     <img src="https://img.shields.io/badge/node-20%2B-339933?style=flat-square&logo=node.js&logoColor=white" alt="Node 20+" />
